@@ -256,7 +256,7 @@ const defaultMessages=[
 function getMessages(){
   try{const stored=JSON.parse(localStorage.getItem("urbanBirthdayMessages")||"null");return Array.isArray(stored)&&stored.length?stored:defaultMessages}catch{return defaultMessages}
 }
-function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",""":"&quot;","'":"&#039;"}[c]))}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c]))}
 function renderMessages(){
   const data=getMessages();
   $("#chat").innerHTML=data.length?data.slice().reverse().map(m=>`<article class="message"><div class="message-avatar">${m.avatar}</div><div><strong>${escapeHtml(m.name)}</strong><time>${escapeHtml(m.time||"just now")}</time><p>${escapeHtml(m.text)}</p><div class="system">[System]: User ${escapeHtml(m.name)} wished Chilley & Naren a Happy Birthday!</div></div></article>`).join(""):'<div class="chat-empty">No messages yet. Be the first player to send a wish.</div>';
@@ -339,7 +339,7 @@ updateQuest();
     try{const raw=localStorage.getItem(key);return raw?JSON.parse(raw):fallback}catch{return fallback}
   };
   const writeJSON=(key,value)=>localStorage.setItem(key,JSON.stringify(value));
-  const expansion=readJSON(EXP_KEY,{passes:{},gear:{naren:"none",chilley:"none"},souvenirs:[],memHype:{},obbyComplete:false,finaleTarget:""});
+  const expansion=readJSON(EXP_KEY,{passes:{},gear:{naren:"none",chilley:"none"},souvenirs:[],memHype:{},obbyComplete:false,obbyRewarded:false,finaleTarget:""});
   const saveExpansion=()=>writeJSON(EXP_KEY,expansion);
   const hasPass=id=>!!expansion.passes[id];
   const $e=s=>document.querySelector(s);
@@ -539,7 +539,7 @@ updateQuest();
   function nextObbyLevel(){
     if(obby.level<3){obby.level++;obby.pizzas=[];obbyResetPlayer();setObbyText(obby.level===2?"Level 2 — Chilley's Chaos Zone: dodge falling pizza.":"Level 3 — Naren's Shield Stage: reach the 17th Level Star.");}
     else{
-      obby.running=false;obby.complete=true;expansion.obbyComplete=true;saveExpansion();addRobux(5000);
+      obby.running=false;obby.complete=true;expansion.obbyComplete=true;if(!expansion.obbyRewarded){expansion.obbyRewarded=true;saveExpansion();addRobux(5000)}else{saveExpansion();}
       $e("#obbyStatus").textContent="OBBY MASTER • R$ +5,000";
       $e("#obbyStars").textContent="1";
       setObbyText("OBBY COMPLETE — Obby Master Badge unlocked. +5,000 Birthday R$.");
@@ -719,13 +719,10 @@ updateQuest();
   /* ---------- Economy / reset integration ---------- */
   const reset=$e("#resetData");
   if(reset){
-    const oldReset=reset.onclick;
     reset.onclick=function(){
-      const ok=confirm("Reset all birthday data, including expansion passes, memories, obby badge and souvenirs?");
-      if(!ok)return;
-      localStorage.removeItem(EXP_KEY);
-      localStorage.removeItem("lastBirthdayDisplayName");
-      if(oldReset)oldReset.call(this,{preventDefault:()=>{}});
+      if(!confirm("Reset all birthday data, including expansion passes, memories, obby badge and souvenirs?"))return;
+      ["urbanBirthdayMessages","openedBirthdayGifts","birthdayTalked","birthdayTriviaComplete","birthdayRobux","birthdayExpansionState","lastBirthdayDisplayName"].forEach(k=>localStorage.removeItem(k));
+      location.reload();
     };
   }
 
