@@ -38,6 +38,7 @@
       <a href="#lore"><i class="fa-solid fa-scroll"></i><span>Server Lore</span></a>
       <a href="#guestbook"><i class="fa-solid fa-comments"></i><span>Guestbook</span></a>
       <a href="#trivia"><i class="fa-solid fa-gamepad"></i><span>Trivia</span></a>
+      <a href="#vibe-zone"><i class="fa-solid fa-bolt"></i><span>Expansion</span></a>
     </nav>
 
     <div class="top-actions">
@@ -265,10 +266,203 @@
         <div class="panel chat" id="chat" aria-live="polite"></div>
       </div>
     </section>
+
+    <section id="vibe-zone" class="section expansion-section">
+      <div class="section-heading">
+        <div><span class="eyebrow">ADVANCED EXPANSION • VIBE ZONE</span><h2>BOOMBOX <span>DJ BOOTH</span></h2></div>
+        <span class="live-chip gold-chip">● PROCEDURAL AUDIO</span>
+      </div>
+
+      <div class="expansion-grid vibe-grid">
+        <div class="boombox panel" id="boombox">
+          <div class="boombox-top"><span class="boombox-speaker"></span><div><b>BIRTHDAY BOOMBOX</b><small>RETRO SERVER RADIO</small></div><span class="boombox-led"></span></div>
+          <div class="boombox-display">
+            <div><span>NOW PLAYING</span><strong id="djNowPlaying">Birthday Strategy</strong><small id="djTrackKind">ORIGINAL CHiPTUNE</small></div>
+            <div class="eq" id="djEq" aria-hidden="true"><i class="eq-bar"></i><i class="eq-bar"></i><i class="eq-bar"></i><i class="eq-bar"></i><i class="eq-bar"></i><i class="eq-bar"></i><i class="eq-bar"></i><i class="eq-bar"></i><i class="eq-bar"></i><i class="eq-bar"></i><i class="eq-bar"></i><i class="eq-bar"></i><i class="eq-bar"></i><i class="eq-bar"></i><i class="eq-bar"></i><i class="eq-bar"></i><i class="eq-bar"></i><i class="eq-bar"></i></div>
+          </div>
+          <label class="dj-selector">Track
+            <select id="djTrack">
+              <option value="0">Birthday Strategy</option>
+              <option value="1">Disaster Escape</option>
+              <option value="2">Lo-Fi Birthday Chill</option>
+              <option value="3">GOAT Victory Drive — VIP</option>
+              <option value="4">Chaos Circuit — VIP</option>
+            </select>
+          </label>
+          <div class="boombox-controls">
+            <button class="icon-btn" id="djPrev" aria-label="Previous track"><i class="fa-solid fa-backward"></i></button>
+            <button class="btn primary dj-play" id="djPlay"><i class="fa-solid fa-play"></i> PLAY</button>
+            <button class="icon-btn" id="djNext" aria-label="Next track"><i class="fa-solid fa-forward"></i></button>
+          </div>
+          <label class="volume-row"><span><i class="fa-solid fa-volume-low"></i> VOLUME</span><input id="djVolume" type="range" min="0" max="100" value="45"></label>
+          <p class="micro-note" id="djNotice">Original browser-generated birthday chiptunes; no external music files required.</p>
+        </div>
+
+        <div class="panel command-console">
+          <div class="terminal-head"><i class="fa-solid fa-terminal"></i> ADMIN ABUSE EASTER EGGS</div>
+          <p>Run these inside the existing <b>/w BIRTHDAY MESSAGE</b> terminal:</p>
+          <div class="command-list">
+            <code>:fly</code><span>Float the avatar cards</span>
+            <code>:oof</code><span>Generated oof-like barrage + screen shake</span>
+            <code>:godmode</code><span>Rainbow-shift neon borders</span>
+            <code>:spawn pizza</code><span>Rain pizza slices across the screen</span>
+            <code>:bright</code><span>Toggle ultra-bright neon bloom</span>
+          </div>
+          <button class="btn secondary" id="commandDemo"><i class="fa-solid fa-wand-magic-sparkles"></i> RUN RANDOM EASTER EGG</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="birthday-obby" class="section expansion-section">
+      <div class="section-heading">
+        <div><span class="eyebrow">HTML5 CANVAS MINI-GAME • 3 LEVELS</span><h2>BIRTHDAY <span>OBBY</span></h2></div>
+        <span class="score-chip" id="obbyStatus">READY • R$ +0</span>
+      </div>
+      <div class="obby-layout panel">
+        <div class="obby-hud">
+          <div><span class="obby-label">LEVEL</span><strong id="obbyLevelLabel">1 / 3</strong></div>
+          <div><span class="obby-label">STARS</span><strong id="obbyStars">0</strong></div>
+          <div><span class="obby-label">REWARD</span><strong>R$ +5,000</strong></div>
+          <button class="btn primary" id="obbyStart"><i class="fa-solid fa-play"></i> START OBBY</button>
+        </div>
+        <div class="canvas-frame">
+          <canvas id="obbyCanvas" width="960" height="360" aria-label="Birthday Obby canvas mini-game"></canvas>
+          <div class="canvas-caption" id="obbyCaption">Level 1 — Spawn Area: jump over red lava bricks.</div>
+        </div>
+        <div class="obby-touch-controls">
+          <button data-obby="left" aria-label="Move left">◀</button>
+          <button data-obby="jump" aria-label="Jump">▲</button>
+          <button data-obby="right" aria-label="Move right">▶</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="bloxy-awards" class="section expansion-section">
+      <div class="section-heading">
+        <div><span class="eyebrow">AWARDS NIGHT • SPOTLIGHT EVENT</span><h2>BLOXY <span>AWARDS</span></h2></div>
+        <span class="hint">Click a trophy to trigger the podium show</span>
+      </div>
+      <div class="podium-stage" id="podiumStage">
+        <div class="spotlight spotlight-left"></div><div class="spotlight spotlight-right"></div>
+        <article class="podium-card goat-podium" data-award="naren">
+          <div class="podium-rank">01</div>
+          <div class="trophy golden-trophy" role="button" tabindex="0" aria-label="Golden Bloxy Trophy for Naren">🏆</div>
+          <span class="award-category">BEST BIG BROTHER & SERVER PILLAR</span>
+          <h3>Naren</h3><p>Golden Bloxy Trophy • Brotherhood Aegis Winner</p>
+          <button class="btn secondary award-trigger">PRESENT AWARD</button>
+        </article>
+        <article class="podium-card chaos-podium" data-award="chilley">
+          <div class="podium-rank">02</div>
+          <div class="trophy chaos-trophy" role="button" tabindex="0" aria-label="Chaos Bloxy Trophy for Chilley">🌀</div>
+          <span class="award-category">MOST CHAOTIC & UNMATCHED VIBE</span>
+          <h3>Chilley</h3><p>Glowing Chaos Bloxy Trophy • Wildcard Winner</p>
+          <button class="btn secondary award-trigger">PRESENT AWARD</button>
+        </article>
+      </div>
+    </section>
+
+    <section id="locker" class="section expansion-section">
+      <div class="section-heading">
+        <div><span class="eyebrow">ACCESSORY SYSTEM • AVATAR GEAR</span><h2>GEAR <span>LOCKER</span></h2></div>
+        <span class="live-chip">● LIVE SWAPPER</span>
+      </div>
+      <div class="locker panel">
+        <div class="locker-target-row">
+          <span>Equip on:</span>
+          <button class="locker-target active" data-target="naren">NAREN</button>
+          <button class="locker-target" data-target="chilley">CHILLEY</button>
+        </div>
+        <div class="gear-grid">
+          <button class="gear-item" data-gear="fedora"><span>🎩</span><b>Sparkle Time Fedora</b><small>ICONIC</small></button>
+          <button class="gear-item" data-gear="dominus"><span>👑</span><b>Dominus Empyreus</b><small>MYTHIC</small></button>
+          <button class="gear-item" data-gear="valkyrie"><span>⛑️</span><b>Valkyrie Helm</b><small>LEGENDARY</small></button>
+          <button class="gear-item" data-gear="party"><span>🎉</span><b>Golden Party Hat</b><small>BIRTHDAY</small></button>
+          <button class="gear-item" data-gear="none"><span>✕</span><b>Clear Accessory</b><small>DEFAULT</small></button>
+        </div>
+        <small class="micro-note">The locker swaps CSS-built accessories directly onto the avatar frames and remembers your selection.</small>
+      </div>
+    </section>
+
+    <section id="vip-shop" class="section expansion-section">
+      <div class="section-heading">
+        <div><span class="eyebrow">GAME ECONOMY • PASSES & GEAR</span><h2>BIRTHDAY R$ <span>SHOP</span></h2></div>
+        <span class="score-chip">BALANCE: <span id="shopBalance">R$ 0</span></span>
+      </div>
+      <div class="shop-grid" id="shopGrid"></div>
+    </section>
+
+    <section id="memory-vault" class="section expansion-section">
+      <div class="section-heading">
+        <div><span class="eyebrow">PERSISTENT SNAPSHOT GALLERY • LOCAL VAULT</span><h2>MEMORY <span>VAULT</span></h2></div>
+        <span class="hint">Flip a card • tap ❤️ Hype to save your reaction</span>
+      </div>
+      <div class="memory-grid" id="memoryGrid"></div>
+    </section>
+
+    <section id="finale" class="section expansion-section">
+      <div class="section-heading">
+        <div><span class="eyebrow">LIVE EVENT • GRAND FINALE</span><h2>MIDNIGHT <span>FIREWORKS</span></h2></div>
+        <span class="live-chip gold-chip">● REAL-TIME COUNTDOWN</span>
+      </div>
+      <div class="finale-panel panel">
+        <div class="countdown-card">
+          <span class="eyebrow">BIRTHDAY MOMENT</span>
+          <div class="countdown" id="countdown">00:00:00:00</div>
+          <label>Set the exact birthday moment
+            <input type="datetime-local" id="finaleDate">
+          </label>
+          <div class="finale-actions">
+            <button class="btn secondary" id="saveFinaleDate"><i class="fa-solid fa-clock"></i> SAVE COUNTDOWN</button>
+            <button class="btn primary" id="igniteFinale"><i class="fa-solid fa-fire"></i> IGNITE FINALE</button>
+          </div>
+          <p class="micro-note">The default target is the next local midnight; set the exact birthday time here when you know it.</p>
+        </div>
+        <div class="finale-preview">
+          <div class="headline-glitch">LEVEL 17 × LEVEL 14</div>
+          <strong>THE BIRTHDAY SERVER GOES MYTHIC</strong>
+          <span>Studs • hearts • R$ • MAX HYPE</span>
+        </div>
+      </div>
+      <canvas id="fireworksCanvas" class="fireworks-canvas" aria-hidden="true"></canvas>
+    </section>
+
+    <section id="trading-plaza" class="section expansion-section">
+      <div class="section-heading">
+        <div><span class="eyebrow">VIRTUAL TRADE HUB • SOUVENIR EXCHANGE</span><h2>TRADING <span>PLAZA</span></h2></div>
+        <span class="live-chip pink-chip">● LOCAL INVENTORY</span>
+      </div>
+      <div class="trade-layout">
+        <div class="trade-terminal panel">
+          <div class="terminal-head"><i class="fa-solid fa-arrow-right-arrow-left"></i> SIMULATED TRADE DESK</div>
+          <p>Choose an offer item, pick which birthday legend you are trading with, then open the confirmation modal.</p>
+          <div class="trade-options">
+            <label>YOUR OFFER
+              <select id="tradeOffer">
+                <option value="Virtual Cake">Virtual Cake 🍰</option>
+                <option value="Hyper-Hype">Hyper-Hype ⚡</option>
+                <option value="Birthday Wish">Birthday Wish 💌</option>
+              </select>
+            </label>
+            <label>TRADE PARTNER
+              <select id="tradePartner">
+                <option value="naren">Naren 🐐</option>
+                <option value="chilley">Chilley 🌀</option>
+              </select>
+            </label>
+          </div>
+          <button class="btn primary" id="openTrade"><i class="fa-solid fa-handshake"></i> OPEN TRADE</button>
+        </div>
+        <div class="panel souvenir-inventory">
+          <div class="terminal-head"><i class="fa-solid fa-boxes-stacked"></i> SOUVENIR INVENTORY</div>
+          <div id="souvenirList" class="souvenir-list"></div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer>
-    <div><b>◈ BIRTHDAY SERVER v3.0</b><span>MADE FOR CHILLEY & NAREN</span></div>
+    <div><b>◈ BIRTHDAY SERVER v5.0 EXPANSION</b><span>MADE FOR CHILLEY & NAREN</span></div>
     <button id="resetData">Reset local birthday data</button>
   </footer>
 
@@ -290,6 +484,24 @@
         <button class="btn primary" id="dialogueNext">NEXT <i class="fa-solid fa-angle-right"></i></button>
       </div>
       <div class="dialogue-progress" id="dialogueProgress"></div>
+    </div>
+  </dialog>
+
+
+  <dialog id="tradeModal" class="modal trade-modal">
+    <div class="modal-box trade-box">
+      <button class="close" id="closeTrade" aria-label="Close trade">×</button>
+      <div class="trade-window">
+        <span class="eyebrow">TRADE CONFIRMATION</span>
+        <h2 id="tradeTitle">BIRTHDAY TRADE</h2>
+        <div class="trade-slots">
+          <div class="trade-slot"><span>OFFER</span><strong id="tradeOfferPreview">Virtual Cake 🍰</strong><small>You give</small></div>
+          <div class="trade-arrow">⇄</div>
+          <div class="trade-slot received"><span>RECEIVE</span><strong id="tradeReceivePreview">Naren's Certified GOAT Seal 🐐</strong><small>Exclusive souvenir</small></div>
+        </div>
+        <button class="btn primary" id="acceptTrade"><i class="fa-solid fa-check"></i> ACCEPT TRADE</button>
+        <p class="micro-note">This is a fictional local exchange for the birthday website. No real Roblox items or accounts are affected.</p>
+      </div>
     </div>
   </dialog>
 
