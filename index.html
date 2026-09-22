@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#191b1d">
+  <meta name="description" content="A Roblox-inspired birthday server for Chilley & Naren.">
+  <title>Chilley & Naren • Birthday Server</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="toast" class="toast" aria-live="polite"></div>
+  <div id="confetti" class="confetti-layer" aria-hidden="true"></div>
+  <div class="ambient" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="Birthday Edition home">
+      <span class="brand-cube"><i></i><i></i><i></i></span>
+      <span><b>ROBLOX</b><small>BIRTHDAY EDITION</small></span>
+    </a>
+    <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation">☰</button>
+    <nav id="nav">
+      <a class="active" href="#home">Home</a>
+      <a href="#stats">Player Stats</a>
+      <a href="#gifts">Inventory</a>
+      <a href="#guestbook">Guestbook</a>
+      <a href="#trivia">Trivia</a>
+    </nav>
+    <div class="top-actions">
+      <label class="search"><span>⌕</span><input id="search" placeholder="Search Chilley & Naren..." aria-label="Search"></label>
+      <div class="currency"><span class="robux">R$</span><span>999,999</span><small>Birthday Robux</small></div>
+      <button id="soundToggle" class="icon-btn" aria-label="Toggle sound">🔊</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero section">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="server-pill"><span class="online-dot"></span> SERVER ONLINE <span>•</span> PARTY MODE</div>
+          <p class="eyebrow">★ SPECIAL EVENT • TWO PLAYERS • ONE LEGENDARY DAY</p>
+          <h1>HAPPY BIRTHDAY<br><span>CHILLEY</span> <em>&</em> <span>NAREN</span>!</h1>
+          <p class="lead">Leveling up today! Welcome to the ultimate birthday server.</p>
+          <div class="hero-actions">
+            <button class="btn primary" id="celebrateBtn">▶ JOIN SERVER <small>(Celebrate)</small></button>
+            <a class="btn secondary" href="#gifts">▣ SPAWN GIFTS</a>
+          </div>
+          <div class="server-meta"><span>🌐 Birthday Plaza</span><span>👥 2 VIP players</span><span>⚡ 99+ ping</span></div>
+        </div>
+        <div class="avatars">
+          <article class="avatar-card cyan" data-player="Chilley">
+            <div class="status"><span></span> ONLINE</div>
+            <div class="avatar-stage"><div class="avatar chilley"><div class="head"></div><div class="body"></div><div class="leg l"></div><div class="leg r"></div></div></div>
+            <div class="player-card-info"><span class="level">LEVEL UP</span><h2>Chilley</h2><p>Master Builder</p><div class="badge">🎂 BIRTHDAY VIP</div></div>
+          </article>
+          <article class="avatar-card gold" data-player="Naren">
+            <div class="status"><span></span> ONLINE</div>
+            <div class="avatar-stage"><div class="avatar naren"><div class="head"></div><div class="body"></div><div class="leg l"></div><div class="leg r"></div></div></div>
+            <div class="player-card-info"><span class="level">LEVEL UP</span><h2>Naren</h2><p>Pro Gamer</p><div class="badge">🎂 BIRTHDAY VIP</div></div>
+          </article>
+        </div>
+      </div>
+      <div class="particles" id="particles"></div>
+    </section>
+
+    <section id="stats" class="section">
+      <div class="section-heading"><div><span class="eyebrow">TAB MENU • PLAYER LIST</span><h2>PLAYER <span>STATS</span></h2></div><span class="live-chip">● LIVE</span></div>
+      <div class="panel table-wrap">
+        <table>
+          <thead><tr><th>RANK</th><th>PLAYER NAME</th><th>BIRTHDAY LEVEL</th><th>LOYALTY</th><th>FAVOURITE GAMES</th><th>SPECIAL BADGES</th></tr></thead>
+          <tbody>
+            <tr><td><b class="rank">#1</b></td><td><strong>Chilley</strong><small>Master Builder</small></td><td><b>∞</b> UNLOCKED</td><td><span class="vip">BIRTHDAY VIP</span></td><td>Bloxburg • Adopt Me</td><td><div class="badges"><button title="Best Friend — certified day-one teammate">🏆</button><button title="Speedrunner — somehow always first">⚡</button><button title="Cake Eater — inventory mysteriously empty">🎂</button></div></td></tr>
+            <tr><td><b class="rank">#2</b></td><td><strong>Naren</strong><small>Pro Gamer</small></td><td><b>∞</b> UNLOCKED</td><td><span class="vip">BIRTHDAY VIP</span></td><td>Arsenal • Bloxburg</td><td><div class="badges"><button title="Party Host — server owner energy">👑</button><button title="Clutch Gamer — panic, then somehow wins">🎮</button><button title="Hype Master — +100 server energy">🚀</button></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="gifts" class="section">
+      <div class="section-heading"><div><span class="eyebrow">INVENTORY • 08 ITEMS</span><h2>GIFT <span>CRATES</span></h2></div><span class="hint">Click a crate to unbox</span></div>
+      <div class="gift-grid" id="giftGrid"></div>
+    </section>
+
+    <section id="trivia" class="section">
+      <div class="section-heading"><div><span class="eyebrow">MINI-GAME • CHILLEY & NAREN SERVER QUIZ</span><h2>TRIVIA <span>ROUND</span></h2></div><span id="scoreChip" class="score-chip">R$ 0</span></div>
+      <div class="quiz panel" id="quiz"></div>
+    </section>
+
+    <section id="guestbook" class="section">
+      <div class="section-heading"><div><span class="eyebrow">SERVER CHAT • WISH TERMINAL</span><h2>GUEST <span>BOOK</span></h2></div><span class="live-chip">● LIVE CHAT</span></div>
+      <div class="guest-grid">
+        <form class="panel wish-form" id="wishForm">
+          <div class="terminal-head"><span>◉</span> SEND BIRTHDAY WISH</div>
+          <label>Your name<input id="guestName" maxlength="28" required placeholder="FriendName"></label>
+          <label>Avatar icon<select id="guestAvatar"><option>😎</option><option>🧱</option><option>🎮</option><option>👑</option><option>🐸</option><option>🔥</option></select></label>
+          <label>Message<textarea id="guestMessage" maxlength="180" required placeholder="gg Chilley & Naren!"></textarea></label>
+          <button class="btn primary" type="submit">SEND TO SERVER ↗</button>
+          <small class="privacy-note">Saved locally in this browser — no account required.</small>
+        </form>
+        <div class="panel chat" id="chat" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>◈ BIRTHDAY SERVER v1.0</span><span>MADE FOR CHILLEY & NAREN</span><button id="resetData">Reset local guestbook</button></footer>
+
+  <dialog id="giftModal" class="modal"><div class="modal-box"><button class="close" data-close>×</button><div id="modalContent"></div></div></dialog>
+  <script src="script.js"></script>
+</body>
+</html>
