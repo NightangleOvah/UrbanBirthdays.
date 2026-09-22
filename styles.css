@@ -178,3 +178,13 @@ footer{display:flex;justify-content:space-between;align-items:center;gap:12px;fl
 
 .pizza-rain span{display:block;width:44px;height:44px}.pizza-rain svg{width:100%;height:100%;display:block;filter:drop-shadow(0 0 8px rgba(255,184,0,.2))}
 .podium-card::after{content:"";display:block;height:10px;margin:20px auto -30px;width:70%;border-radius:50% 50% 8px 8px;background:linear-gradient(180deg,#5f4b1b,#1f1c14);box-shadow:0 -4px 0 rgba(255,215,106,.35),0 15px 25px rgba(0,0,0,.35)}
+
+
+/* ---------- Real Photo Memory Archive ---------- */
+.memory-photo.photo-memory{position:relative;overflow:hidden;min-height:190px;background:#101214}
+.memory-photo.photo-memory img{position:absolute;inset:0;width:400%;height:200%;max-width:none;object-fit:cover;transform:translate(calc((var(--memory-pos-x,0))*-1),calc((var(--memory-pos-y,0))*-1));object-position:var(--memory-pos);}
+.memory-photo.photo-memory{background-image:url("assets/memories/memory-archive.jpg");background-size:400% 200%;background-position:var(--memory-pos);}
+.memory-photo.photo-memory img{display:none}
+.memory-photo.photo-memory .memory-icon{position:absolute;right:10px;top:10px;z-index:2;display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:rgba(10,12,14,.78);border:1px solid rgba(255,255,255,.18);box-shadow:0 8px 20px rgba(0,0,0,.35)}
+.memory-photo.photo-memory::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.42));pointer-events:none}
+@media(max-width:760px){.memory-photo.photo-memory{min-height:160px}}
