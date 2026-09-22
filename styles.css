@@ -104,3 +104,14 @@ footer{display:flex;justify-content:space-between;align-items:center;gap:12px;fl
 @media(max-width:1120px){.topbar{gap:8px}.topbar nav a span{display:none}.topbar nav a{padding:9px}.search{display:none}.profile-grid{grid-template-columns:1fr}.hero-grid{grid-template-columns:1fr}.hero-copy{text-align:center}.hero-copy .lead{margin-left:auto;margin-right:auto}.hero-actions,.server-meta{justify-content:center}.quest-panel{grid-template-columns:1fr}.quest-button{justify-self:start}.gift-grid{grid-template-columns:repeat(2,1fr)}.guest-grid{grid-template-columns:1fr}}
 @media(max-width:760px){.topbar{height:60px}.topbar nav{display:none}.topbar nav.open{position:absolute;display:flex;flex-direction:column;top:60px;left:0;right:0;padding:9px;background:#151719;border-bottom:1px solid #34383C}.topbar nav.open a span{display:block}.mobile-menu{display:block}.top-actions{margin-left:auto}.server-ribbon{gap:9px;overflow:hidden;white-space:nowrap}.server-ribbon span:nth-child(2),.server-ribbon .ribbon-right{display:none}.section{padding:65px 0}.hero{padding-top:58px;min-height:0}.hero h1{font-size:42px;letter-spacing:-2px}.avatars{gap:8px}.avatar-stage{height:210px}.avatar{transform:scale(.82)}.avatar-card:hover{transform:translateY(-3px)}.player-card-info{padding:10px}.player-card-info h2{font-size:18px}.gift-grid{grid-template-columns:1fr 1fr;gap:8px}.gift{min-height:165px;padding:10px}.gift .crate{height:84px;font-size:44px}.section-heading{align-items:flex-start;gap:10px}.section-heading h2{font-size:28px}.answers{grid-template-columns:1fr}.quiz{padding:16px}.question{font-size:18px}.timeline{margin-left:5px}.timeline-card{padding-left:58px}.achievement-grid{grid-template-columns:1fr}.testimonial-actions .btn{width:100%}.guest-grid{gap:10px}footer{padding:24px 4%}}
 @media(max-width:420px){.hero h1{font-size:36px}.avatars{grid-template-columns:1fr}.avatar-stage{height:210px}.currency{display:none}.server-meta{gap:9px}.hero-actions .btn{width:100%}.section-heading h2{font-size:24px}.gift-grid{grid-template-columns:1fr 1fr}.testimonial-output{min-height:145px}.chat-preview-message{font-size:17px}}
+
+/* Low-power mobile tuning: keep the visual identity while reducing expensive effects. */
+@media(max-width:760px){
+  .ambient{opacity:.055;mask-image:none;background-size:28px 28px}
+  .avatar-card,.profile-card,.panel,.gift,.timeline-card{box-shadow:0 10px 28px rgba(0,0,0,.22)}
+  .avatar-card:hover,.gift:hover{box-shadow:0 10px 28px rgba(0,0,0,.2)}
+  .scanlines{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
