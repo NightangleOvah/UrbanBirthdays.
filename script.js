@@ -11,12 +11,24 @@ const state={
 };
 
 let audioCtx;
+let audioUnlocked=false;
 let currentDialogue=null;
 let dialogueStep=0;
 
+function unlockAudio(){
+  if(state.muted||audioUnlocked)return;
+  try{
+    audioCtx??=new (window.AudioContext||window.webkitAudioContext)();
+    if(audioCtx.state==="suspended")audioCtx.resume();
+    audioUnlocked=true;
+  }catch{}
+}
 function beep(freq=520,duration=.06,type="square",gain=.028){
   if(state.muted)return;
   try{
+    audioCtx??=new (window.AudioContext||window.webkitAudioContext)();
+    if(!audioUnlocked)return;
+    if(audioCtx.state==="suspended")audioCtx.resume();
     audioCtx??=new (window.AudioContext||window.webkitAudioContext)();
     if(audioCtx.state==="suspended")audioCtx.resume();
     const o=audioCtx.createOscillator(),g=audioCtx.createGain();
@@ -47,7 +59,11 @@ function addRobux(amount){
 }
 updateSoundButton();updateRobux();
 
+document.addEventListener("pointerdown",()=>unlockAudio(),{once:true,passive:true});
+document.addEventListener("keydown",()=>unlockAudio(),{once:true,passive:true});
+
 $("#soundToggle").onclick=()=>{
+  if(!state.muted)unlockAudio();
   state.muted=!state.muted;localStorage.setItem("birthdayMuted",state.muted?"1":"0");updateSoundButton();
   if(!state.muted)successSound();
 };
@@ -308,7 +324,7 @@ const io=new IntersectionObserver(entries=>{
 sections.forEach(s=>io.observe(s));
 
 window.addEventListener("pointerover",e=>{
-  if(e.target.matches("button,a,.avatar-clickable,.gift,.achievement"))beep(275,.025,"triangle",.008);
+  if(audioUnlocked && e.target.matches("button,a,.avatar-clickable,.gift,.achievement"))beep(275,.025,"triangle",.008);
 });
 window.addEventListener("keydown",e=>{if(e.key==="Escape"){if($("#giftModal").open)$("#giftModal").close();if($("#dialogueModal").open)$("#dialogueModal").close();}});
 updateQuest();
