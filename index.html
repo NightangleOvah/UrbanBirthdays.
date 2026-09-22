@@ -4,110 +4,212 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#191b1d">
-  <meta name="description" content="A Roblox-inspired birthday server for Chilley & Naren.">
-  <title>Chilley & Naren • Birthday Server</title>
+  <meta name="description" content="The Chilley & Naren Birthday Server — a Roblox-inspired interactive birthday experience.">
+  <title>Happy Birthday Chilley & Naren! | Birthday Server</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Optional visual helper; the site still works without it. -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 </head>
 <body>
   <div id="toast" class="toast" aria-live="polite"></div>
   <div id="confetti" class="confetti-layer" aria-hidden="true"></div>
   <div class="ambient" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
 
   <header class="topbar">
     <a class="brand" href="#home" aria-label="Birthday Edition home">
-      <span class="brand-cube"><i></i><i></i><i></i></span>
+      <span class="brand-mark"><i class="fa-solid fa-cube"></i></span>
       <span><b>ROBLOX</b><small>BIRTHDAY EDITION</small></span>
     </a>
-    <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation">☰</button>
+
+    <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
     <nav id="nav">
-      <a class="active" href="#home">Home</a>
-      <a href="#stats">Player Stats</a>
-      <a href="#gifts">Inventory</a>
-      <a href="#guestbook">Guestbook</a>
-      <a href="#trivia">Trivia</a>
+      <a class="active" href="#home"><i class="fa-solid fa-house"></i><span>Home</span></a>
+      <a href="#stats"><i class="fa-solid fa-chart-simple"></i><span>Player Stats</span></a>
+      <a href="#gifts"><i class="fa-solid fa-box-open"></i><span>Inventory</span></a>
+      <a href="#guestbook"><i class="fa-solid fa-comments"></i><span>Guestbook</span></a>
+      <a href="#trivia"><i class="fa-solid fa-gamepad"></i><span>Trivia</span></a>
     </nav>
+
     <div class="top-actions">
-      <label class="search"><span>⌕</span><input id="search" placeholder="Search Chilley & Naren..." aria-label="Search"></label>
-      <div class="currency"><span class="robux">R$</span><span>999,999</span><small>Birthday Robux</small></div>
-      <button id="soundToggle" class="icon-btn" aria-label="Toggle sound">🔊</button>
+      <label class="search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input id="search" placeholder="Search Chilley & Naren..." aria-label="Search the birthday server">
+      </label>
+      <div class="currency"><span class="robux">R$</span><strong>999,999</strong><small>BIRTHDAY ROBUX</small></div>
+      <button id="soundToggle" class="icon-btn" aria-label="Toggle sound" title="Toggle sound">
+        <i class="fa-solid fa-volume-high"></i>
+      </button>
     </div>
   </header>
+
+  <div class="server-ribbon">
+    <span><i class="fa-solid fa-circle"></i> SERVER ONLINE</span>
+    <span><i class="fa-solid fa-shield-halved"></i> VIP INSTANCE</span>
+    <span><i class="fa-solid fa-users"></i> 2 / 2 BIRTHDAY PLAYERS</span>
+    <span class="ribbon-right">EVENT: <b>BIRTHDAY MAYHEM</b></span>
+  </div>
 
   <main>
     <section id="home" class="hero section">
       <div class="hero-grid">
         <div class="hero-copy">
-          <div class="server-pill"><span class="online-dot"></span> SERVER ONLINE <span>•</span> PARTY MODE</div>
+          <div class="server-pill"><span class="online-dot"></span> PARTY SERVER LIVE <span>•</span> NOOB-FRIENDLY</div>
           <p class="eyebrow">★ SPECIAL EVENT • TWO PLAYERS • ONE LEGENDARY DAY</p>
-          <h1>HAPPY BIRTHDAY<br><span>CHILLEY</span> <em>&</em> <span>NAREN</span>!</h1>
-          <p class="lead">Leveling up today! Welcome to the ultimate birthday server.</p>
+          <h1>HAPPY BIRTHDAY<br><span>CHILLEY</span> <em>&</em> <span class="gold">NAREN</span>!</h1>
+          <p class="lead">Leveling up today! Enter the birthday server, inspect the VIP players, unbox ridiculous loot, and leave a message before the party ends.</p>
+
           <div class="hero-actions">
-            <button class="btn primary" id="celebrateBtn">▶ JOIN SERVER <small>(Celebrate)</small></button>
-            <a class="btn secondary" href="#gifts">▣ SPAWN GIFTS</a>
+            <button class="btn primary" id="celebrateBtn"><i class="fa-solid fa-play"></i> JOIN SERVER <small>(Celebrate)</small></button>
+            <a class="btn secondary" href="#gifts"><i class="fa-solid fa-box-open"></i> SPAWN GIFTS</a>
           </div>
-          <div class="server-meta"><span>🌐 Birthday Plaza</span><span>👥 2 VIP players</span><span>⚡ 99+ ping</span></div>
+
+          <div class="server-meta">
+            <span><i class="fa-solid fa-earth-americas"></i> Birthday Plaza</span>
+            <span><i class="fa-solid fa-wifi"></i> 28ms</span>
+            <span><i class="fa-solid fa-users"></i> 2 VIP players</span>
+            <span><i class="fa-solid fa-bolt"></i> MAX HYPE</span>
+          </div>
         </div>
+
         <div class="avatars">
           <article class="avatar-card cyan" data-player="Chilley">
+            <div class="card-tag">CO-HOST</div>
             <div class="status"><span></span> ONLINE</div>
-            <div class="avatar-stage"><div class="avatar chilley"><div class="head"></div><div class="body"></div><div class="leg l"></div><div class="leg r"></div></div></div>
-            <div class="player-card-info"><span class="level">LEVEL UP</span><h2>Chilley</h2><p>Master Builder</p><div class="badge">🎂 BIRTHDAY VIP</div></div>
+            <div class="avatar-stage">
+              <div class="avatar chilley">
+                <div class="hat"></div><div class="head"></div><div class="face">•ᴗ•</div><div class="body"></div>
+                <div class="arm left"></div><div class="arm right"></div><div class="leg l"></div><div class="leg r"></div>
+              </div>
+            </div>
+            <div class="player-card-info">
+              <div class="mini-line"><span class="level">LEVEL 99</span><span class="rarity">LEGENDARY</span></div>
+              <h2>Chilley</h2><p>Master Builder • Birthday VIP</p>
+              <div class="stat-bars"><span><i style="width:96%"></i></span><b>HYPE 96</b></div>
+              <div class="badge-row"><span>🏆 OG Member</span><span>⚡ Speedrunner</span></div>
+            </div>
           </article>
+
           <article class="avatar-card gold" data-player="Naren">
+            <div class="card-tag gold-tag">VIP HOST</div>
             <div class="status"><span></span> ONLINE</div>
-            <div class="avatar-stage"><div class="avatar naren"><div class="head"></div><div class="body"></div><div class="leg l"></div><div class="leg r"></div></div></div>
-            <div class="player-card-info"><span class="level">LEVEL UP</span><h2>Naren</h2><p>Pro Gamer</p><div class="badge">🎂 BIRTHDAY VIP</div></div>
+            <div class="avatar-stage">
+              <div class="avatar naren">
+                <div class="cap"></div><div class="head"></div><div class="face">•ᴗ•</div><div class="body"></div>
+                <div class="arm left"></div><div class="arm right"></div><div class="leg l"></div><div class="leg r"></div>
+              </div>
+            </div>
+            <div class="player-card-info">
+              <div class="mini-line"><span class="level gold-level">LEVEL 99</span><span class="rarity gold-rarity">MYTHIC</span></div>
+              <h2>Naren</h2><p>Pro Gamer • Birthday VIP</p>
+              <div class="stat-bars gold-bars"><span><i style="width:100%"></i></span><b>HYPE 100</b></div>
+              <div class="badge-row"><span>👑 Party Host</span><span>🚀 Hype Master</span></div>
+            </div>
           </article>
         </div>
       </div>
+
+      <div class="quest-panel">
+        <div><span class="quest-kicker">DAILY QUEST</span><strong>CELEBRATE THE TWO LEGENDS</strong><small>Complete 3 birthday activities to unlock MAX HYPE mode.</small></div>
+        <div class="quest-progress"><div><i style="width:66%"></i></div><b>2 / 3</b></div>
+        <a href="#trivia" class="quest-button">CONTINUE QUEST <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
       <div class="particles" id="particles"></div>
     </section>
 
     <section id="stats" class="section">
-      <div class="section-heading"><div><span class="eyebrow">TAB MENU • PLAYER LIST</span><h2>PLAYER <span>STATS</span></h2></div><span class="live-chip">● LIVE</span></div>
+      <div class="section-heading">
+        <div><span class="eyebrow">TAB MENU • PLAYER LIST</span><h2>SERVER <span>LEADERBOARD</span></h2></div>
+        <span class="live-chip">● LIVE</span>
+      </div>
+
       <div class="panel table-wrap">
+        <div class="table-topbar">
+          <div><i class="fa-solid fa-list-ol"></i> Birthday VIP Instance</div>
+          <span>MAX PLAYERS: <b>2 / 2</b></span>
+        </div>
         <table>
-          <thead><tr><th>RANK</th><th>PLAYER NAME</th><th>BIRTHDAY LEVEL</th><th>LOYALTY</th><th>FAVOURITE GAMES</th><th>SPECIAL BADGES</th></tr></thead>
+          <thead><tr><th>RANK</th><th>PLAYER</th><th>ROLE</th><th>BIRTHDAY LEVEL</th><th>FAVOURITE GAMES</th><th>SPECIAL BADGES</th></tr></thead>
           <tbody>
-            <tr><td><b class="rank">#1</b></td><td><strong>Chilley</strong><small>Master Builder</small></td><td><b>∞</b> UNLOCKED</td><td><span class="vip">BIRTHDAY VIP</span></td><td>Bloxburg • Adopt Me</td><td><div class="badges"><button title="Best Friend — certified day-one teammate">🏆</button><button title="Speedrunner — somehow always first">⚡</button><button title="Cake Eater — inventory mysteriously empty">🎂</button></div></td></tr>
-            <tr><td><b class="rank">#2</b></td><td><strong>Naren</strong><small>Pro Gamer</small></td><td><b>∞</b> UNLOCKED</td><td><span class="vip">BIRTHDAY VIP</span></td><td>Arsenal • Bloxburg</td><td><div class="badges"><button title="Party Host — server owner energy">👑</button><button title="Clutch Gamer — panic, then somehow wins">🎮</button><button title="Hype Master — +100 server energy">🚀</button></div></td></tr>
+            <tr>
+              <td><b class="rank">#1</b></td>
+              <td><strong>Chilley</strong><small>Master Builder</small></td>
+              <td>Co-Host / Developer</td>
+              <td><span class="vip">LVL 99 • UNLOCKED</span></td>
+              <td>Bloxburg • Adopt Me</td>
+              <td><div class="badges"><button title="Best Friend — certified day-one teammate">🏆</button><button title="Speedrunner — somehow always first">⚡</button><button title="Cake Eater — inventory mysteriously empty">🎂</button></div></td>
+            </tr>
+            <tr>
+              <td><b class="rank">#2</b></td>
+              <td><strong>Naren</strong><small>Pro Gamer</small></td>
+              <td>Co-Host / VIP</td>
+              <td><span class="vip gold-vip">LVL 99 • UNLOCKED</span></td>
+              <td>Arsenal • Bloxburg</td>
+              <td><div class="badges"><button title="Party Host — server owner energy">👑</button><button title="Clutch Gamer — panic, then somehow wins">🎮</button><button title="Hype Master — +100 server energy">🚀</button></div></td>
+            </tr>
           </tbody>
         </table>
       </div>
     </section>
 
     <section id="gifts" class="section">
-      <div class="section-heading"><div><span class="eyebrow">INVENTORY • 08 ITEMS</span><h2>GIFT <span>CRATES</span></h2></div><span class="hint">Click a crate to unbox</span></div>
+      <div class="section-heading">
+        <div><span class="eyebrow">INVENTORY • 08 ITEMS</span><h2>BIRTHDAY <span>LOOT</span></h2></div>
+        <span class="hint"><i class="fa-solid fa-hand-pointer"></i> Click a crate to unbox</span>
+      </div>
       <div class="gift-grid" id="giftGrid"></div>
     </section>
 
     <section id="trivia" class="section">
-      <div class="section-heading"><div><span class="eyebrow">MINI-GAME • CHILLEY & NAREN SERVER QUIZ</span><h2>TRIVIA <span>ROUND</span></h2></div><span id="scoreChip" class="score-chip">R$ 0</span></div>
+      <div class="section-heading">
+        <div><span class="eyebrow">MINI-GAME • CHILLEY & NAREN SERVER QUIZ</span><h2>TRIVIA <span>ROUND</span></h2></div>
+        <span id="scoreChip" class="score-chip">R$ 0</span>
+      </div>
       <div class="quiz panel" id="quiz"></div>
     </section>
 
     <section id="guestbook" class="section">
-      <div class="section-heading"><div><span class="eyebrow">SERVER CHAT • WISH TERMINAL</span><h2>GUEST <span>BOOK</span></h2></div><span class="live-chip">● LIVE CHAT</span></div>
+      <div class="section-heading">
+        <div><span class="eyebrow">SERVER CHAT • WISH TERMINAL</span><h2>GUEST <span>BOOK</span></h2></div>
+        <span class="live-chip">● LIVE CHAT</span>
+      </div>
       <div class="guest-grid">
         <form class="panel wish-form" id="wishForm">
-          <div class="terminal-head"><span>◉</span> SEND BIRTHDAY WISH</div>
-          <label>Your name<input id="guestName" maxlength="28" required placeholder="FriendName"></label>
+          <div class="terminal-head"><i class="fa-solid fa-terminal"></i> SEND BIRTHDAY WISH</div>
+          <label>Your display name<input id="guestName" maxlength="28" required placeholder="FriendName"></label>
           <label>Avatar icon<select id="guestAvatar"><option>😎</option><option>🧱</option><option>🎮</option><option>👑</option><option>🐸</option><option>🔥</option></select></label>
           <label>Message<textarea id="guestMessage" maxlength="180" required placeholder="gg Chilley & Naren!"></textarea></label>
-          <button class="btn primary" type="submit">SEND TO SERVER ↗</button>
-          <small class="privacy-note">Saved locally in this browser — no account required.</small>
+          <button class="btn primary" type="submit"><i class="fa-solid fa-paper-plane"></i> SEND TO SERVER</button>
+          <small class="privacy-note">Stored locally in this browser — no account or login required.</small>
         </form>
         <div class="panel chat" id="chat" aria-live="polite"></div>
       </div>
     </section>
   </main>
 
-  <footer><span>◈ BIRTHDAY SERVER v1.0</span><span>MADE FOR CHILLEY & NAREN</span><button id="resetData">Reset local guestbook</button></footer>
+  <footer>
+    <div><b>◈ BIRTHDAY SERVER v2.0</b><span>MADE FOR CHILLEY & NAREN</span></div>
+    <button id="resetData">Reset local guestbook</button>
+  </footer>
 
-  <dialog id="giftModal" class="modal"><div class="modal-box"><button class="close" data-close>×</button><div id="modalContent"></div></div></dialog>
+  <dialog id="giftModal" class="modal">
+    <div class="modal-box">
+      <button class="close" data-close aria-label="Close gift modal">×</button>
+      <div id="modalContent"></div>
+      <button class="btn primary modal-equip" id="equipLoot"><i class="fa-solid fa-check"></i> EQUIP ITEM</button>
+    </div>
+  </dialog>
+
   <script src="script.js"></script>
 </body>
 </html>
