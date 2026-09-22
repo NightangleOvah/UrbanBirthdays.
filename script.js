@@ -871,7 +871,7 @@ updateQuest();
   const posLoc=gl.getAttribLocation(program,"aPos"),normalLoc=gl.getAttribLocation(program,"aNormal"),mvpLoc=gl.getUniformLocation(program,"uMVP"),modelLoc=gl.getUniformLocation(program,"uModel"),colorLoc=gl.getUniformLocation(program,"uColor");
 
   const verts=[];
-  function face(a,b,c,d,n){verts.push(...a,...b,...c,...n,...n,...n,...a,...c,...d,...n,...n,...n)}
+  function face(a,b,c,d,n){for(const v of [a,b,c,a,c,d])verts.push(...v,...n)}
   const p=[[-.5,-.5,.5],[.5,-.5,.5],[.5,.5,.5],[-.5,.5,.5],[-.5,-.5,-.5],[.5,-.5,-.5],[.5,.5,-.5],[-.5,.5,-.5]];
   face(p[0],p[1],p[2],p[3],[0,0,1]);face(p[1],p[5],p[6],p[2],[1,0,0]);face(p[5],p[4],p[7],p[6],[0,0,-1]);face(p[4],p[0],p[3],p[7],[-1,0,0]);face(p[3],p[2],p[6],p[7],[0,1,0]);face(p[4],p[5],p[1],p[0],[0,-1,0]);
   const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(verts),gl.STATIC_DRAW);
