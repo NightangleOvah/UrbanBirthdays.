@@ -1,0 +1,75 @@
+/* 2008 AUTHENTICITY PASS — Birthday Server retro portal layer */
+:root{
+  --r-red:#c00000;--r-red-dark:#870000;--r-blue:#2c55a0;--r-blue-dark:#17366f;
+  --r-link:#0066cc;--r-border:#b9b9b9;--r-panel:#f7f7f7;--r-text:#333;
+  --r-ticket:#c88000;--r-robux:#008000;
+}
+.retro-portal{
+  width:min(1120px,94%);margin:28px auto 0;background:#eee;border:1px solid #999;
+  box-shadow:0 2px 8px rgba(0,0,0,.22);font-family:Verdana,Tahoma,Arial,sans-serif;color:var(--r-text);
+}
+.retro-logo-bar{
+  min-height:76px;padding:10px 14px;display:flex;align-items:center;gap:18px;
+  background:linear-gradient(#e9e9e9,#cfcfcf);border-bottom:1px solid #8f8f8f;
+}
+.retro-logo{
+  position:relative;color:#fff;font:bold 30px Arial,sans-serif;letter-spacing:-2px;
+  text-shadow:2px 2px 0 #650000,3px 3px 0 rgba(0,0,0,.3);
+  transform:skew(-7deg);padding:2px 8px;background:linear-gradient(#e31a1a,#9a0000);
+  border:1px solid #720000;box-shadow:inset 0 1px rgba(255,255,255,.65),2px 3px 0 #777;
+}
+.retro-logo small{display:block;font-size:8px;letter-spacing:1px;text-align:right;text-shadow:none;transform:skew(7deg);color:#fff}
+.retro-login{margin-left:auto;display:flex;gap:5px;align-items:end;flex-wrap:wrap}
+.retro-login input{width:112px;height:22px;border:1px solid #888;background:#fff;padding:3px;font:11px Verdana}
+.retro-login button,.retro-play,.retro-nav button{
+  border:1px solid #17417d;color:#fff;font:bold 11px Verdana;cursor:pointer;
+  background:linear-gradient(#6d9ee8,#315fa9 48%,#23457d);box-shadow:inset 0 1px rgba(255,255,255,.55),1px 1px 0 #777;
+}
+.retro-login button{height:22px;padding:0 8px}
+.retro-nav{display:flex;flex-wrap:wrap;background:linear-gradient(#3f6eb9,#244b91);border-top:1px solid #668ccc;border-bottom:3px solid #17366f}
+.retro-nav a{padding:7px 13px;color:#fff;text-decoration:none;font:bold 11px Verdana;border-right:1px solid #17366f;text-shadow:1px 1px #17366f}
+.retro-nav a:hover{background:linear-gradient(#638fd1,#2a4f93)}
+.retro-portal-body{padding:10px;display:grid;grid-template-columns:180px 1fr;gap:10px;background:#f0f0f0}
+.retro-side,.retro-mainbox{background:#fff;border:1px solid #aaa;box-shadow:inset 0 0 0 1px #eee}
+.retro-side h3,.retro-mainbox h3{
+  margin:0;padding:6px 8px;color:#fff;font:bold 12px Verdana;
+  background:linear-gradient(#658bc8,#315ba0);border-bottom:1px solid #17366f;
+}
+.retro-side a{display:block;padding:7px 9px;border-bottom:1px solid #ddd;color:var(--r-link);font:11px Verdana;text-decoration:none}
+.retro-side a:hover{background:#e6eefb}
+.retro-currency{padding:9px;border-top:1px solid #ddd;font:11px Verdana}
+.retro-currency b{display:block;margin-top:5px}.ticket{color:var(--r-ticket)}.robux-old{color:var(--r-robux)}
+.retro-mainbox{padding-bottom:10px}.retro-mainbox h3{margin-bottom:9px}
+.retro-welcome{padding:0 10px 8px;font:11px/1.5 Verdana}
+.retro-play{padding:7px 15px;margin:0 10px 8px;font-size:12px}
+.retro-grid{padding:0 10px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.retro-game{border:1px solid #bbb;background:#f8f8f8;padding:4px;box-shadow:inset 0 0 0 1px #fff;cursor:pointer}
+.retro-game:hover{border-color:#5680bd;background:#eef4fd}
+.retro-thumb{aspect-ratio:1;background:linear-gradient(145deg,#9cc2df,#d8ecf6);border:1px solid #888;position:relative;overflow:hidden}
+.retro-thumb:before{content:"";position:absolute;inset:0;background-image:radial-gradient(#777 1px,transparent 1px);background-size:10px 10px;opacity:.18}
+.retro-thumb .brick{position:absolute;bottom:12%;left:10%;width:80%;height:26%;background:linear-gradient(#eab66c,#b77735);border:1px solid #76502d;box-shadow:inset 0 3px rgba(255,255,255,.35)}
+.retro-thumb .figure{position:absolute;left:42%;bottom:27%;width:16%;height:27%;background:#ddd;border:1px solid #555}
+.retro-game a{display:block;color:#06c;font:bold 10px Verdana;text-decoration:none;margin:5px 2px 2px}
+.retro-game small{display:block;font:9px Verdana;color:#555;line-height:1.3}.retro-game em{font-style:normal;color:#b00000;font-weight:bold}
+.retro-portal-note{margin:10px;padding:7px;background:#fff7d8;border:1px solid #d6bd67;font:10px Verdana;color:#554b28}
+.retro-catalog{margin-top:10px;padding:10px;background:#eee;border-top:1px solid #aaa}
+.catalog-layout{display:grid;grid-template-columns:135px 1fr;gap:10px}
+.catalog-filters{background:#fff;border:1px solid #aaa}.catalog-filters button{display:block;width:100%;padding:7px;border:0;border-bottom:1px solid #ddd;background:#fff;text-align:left;color:#06c;font:11px Verdana;cursor:pointer}.catalog-filters button:hover{background:#eaf1fb}
+.catalog-items{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.catalog-item{background:#fff;border:1px solid #aaa;padding:5px;box-shadow:inset 0 0 0 1px #eee}
+.catalog-render{height:100px;background:linear-gradient(#eef5fb,#d7e4f1);border:1px solid #bbb;display:grid;place-items:center;position:relative;overflow:hidden}
+.catalog-render canvas{width:100%;height:100%}.catalog-item b{display:block;color:#06c;font:10px Verdana;margin-top:5px}.catalog-item small{font:9px Verdana;color:#555}.catalog-price{font:bold 10px Verdana;margin-top:4px}
+.catalog-icon{display:inline-grid;place-items:center;width:28px;height:28px;margin-right:5px;vertical-align:middle;border:1px solid #777;box-shadow:inset 0 1px rgba(255,255,255,.8),1px 1px 0 #999;background:linear-gradient(#fff,#d9d9d9);font:bold 11px Arial;color:#333;transform:skew(-3deg)}
+.catalog-icon.goat:before{content:"G";font-size:17px;color:#c88000;text-shadow:1px 1px #fff}
+.catalog-icon.shield:before{content:"A";font-size:15px;color:#315fa9}.catalog-icon.trophy:before{content:"B";font-size:15px;color:#c88000}.catalog-icon.chaos:before{content:"C";font-size:15px;color:#8b3f91}.catalog-icon.heart:before{content:"H";font-size:15px;color:#b21b2f}.catalog-icon.party:before{content:"P";font-size:15px;color:#2c55a0}.catalog-icon.pizza:before{content:"Z";font-size:15px;color:#c88000}.catalog-icon.camera:before{content:"CAM";font-size:8px;color:#333}
+.r6-avatar-canvas{width:100%;height:100%;display:block;background:linear-gradient(#b9d8ed,#eaf2f8)}
+.avatar-stage .avatar{display:none!important}
+.avatar-stage{background:#dce8f1!important;border-bottom:1px solid #aaa}
+.avatar-stage:after{content:"";position:absolute;left:4%;right:4%;bottom:0;height:38px;background:repeating-linear-gradient(90deg,#9aa3a9 0 22px,#b7bdc1 22px 24px);border-top:2px solid #777;opacity:.9}
+.retro-section-frame{background:#eee;border:1px solid #aaa;padding:10px;box-shadow:inset 0 0 0 1px #fff}
+.retro-client-section .section-heading{font-family:Verdana,Tahoma,Arial,sans-serif}
+.retro-client-section .section-heading h2{font-size:23px;letter-spacing:0;color:#333}
+.retro-client-section .section-heading h2 span{color:#c00000}
+.retro-portal .legacy-status{font:10px Verdana}
+@media(max-width:850px){.retro-portal-body{grid-template-columns:1fr}.retro-side{display:none}.retro-grid{grid-template-columns:repeat(2,1fr)}.catalog-items{grid-template-columns:repeat(2,1fr)}.retro-login{display:none}.retro-logo{font-size:24px}.retro-logo-bar{min-height:62px}}
+@media(max-width:520px){.retro-grid,.catalog-items{grid-template-columns:1fr}.retro-nav a{flex:1 1 33%;text-align:center}.catalog-layout{grid-template-columns:1fr}.catalog-filters{display:grid;grid-template-columns:repeat(3,1fr)}}
