@@ -410,7 +410,7 @@ updateQuest();
     document.querySelector(".pizza-rain")?.remove();
     const layer=document.createElement("div");layer.className="pizza-rain";
     for(let i=0;i<34;i++){
-      const p=document.createElement("span");p.textContent="🍕";p.style.left=(Math.random()*100)+"vw";
+      const p=document.createElement("span");p.innerHTML='<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 10 55 25 20 57Z" fill="#ffc107"/><path d="M8 10 55 25" stroke="#fff4b5" stroke-width="6" stroke-linecap="round"/><circle cx="31" cy="28" r="4" fill="#e53935"/><circle cx="42" cy="33" r="4" fill="#e53935"/><circle cx="25" cy="39" r="4" fill="#e53935"/></svg>';p.style.left=(Math.random()*100)+"vw";
       p.style.animationDelay=(Math.random()*.7)+"s";p.style.fontSize=(22+Math.random()*24)+"px";layer.appendChild(p);
     }
     document.body.appendChild(layer);setTimeout(()=>layer.remove(),4200);
