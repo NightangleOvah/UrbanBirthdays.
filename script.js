@@ -745,3 +745,112 @@ updateQuest();
   /* ---------- Persisted expansion status chip ---------- */
   if(hasPass("rainbow")||hasPass("goat"))refreshGuestVIPDecor();
 })();
+
+
+/* =========================================================
+   FINAL POLISH // BIRTHDAY OS
+   ========================================================= */
+(()=>{
+  const $=(s,r=document)=>r.querySelector(s);
+  const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+  const safe=(fn)=>{try{fn()}catch{}};
+
+  // Reading progress + compact session HUD
+  const progress=document.createElement("div");
+  progress.className="site-progress";
+  progress.setAttribute("aria-hidden","true");
+  document.body.appendChild(progress);
+
+  const hud=document.createElement("div");
+  hud.className="session-hud";
+  hud.innerHTML='<span class="hud-chip live"><i class="fa-solid fa-circle"></i> SERVER <b>ONLINE</b></span><span class="hud-chip">SESSION <b id="sessionTime">00:00</b></span><span class="hud-chip">DISCOVERED <b id="discoverCount">0%</b></span><span class="hud-chip">SHORTCUT <b>CTRL/⌘ + K</b></span>';
+  const main=$("main");
+  if(main) main.prepend(hud);
+
+  const start=Date.now();
+  const updateScroll=()=>{
+    const h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(scrollY/h)*100:0)+"%";
+    const st=$("#sessionTime"); if(st){const sec=Math.floor((Date.now()-start)/1000);st.textContent=String(Math.floor(sec/60)).padStart(2,"0")+":"+String(sec%60).padStart(2,"0")}
+    const seen=new Set(JSON.parse(sessionStorage.getItem("birthdaySeenSections")||"[]"));
+    $$("#home,#profiles,#stats,#gifts,#lore,#testimonials,#trivia,#guestbook,#vibe-zone,#birthday-obby,#bloxy-awards,#locker,#vip-shop,#memory-vault,#finale,#trading-plaza").forEach(el=>{
+      const r=el.getBoundingClientRect(); if(r.top<innerHeight*.72&&r.bottom>innerHeight*.12)seen.add(el.id);
+    });
+    sessionStorage.setItem("birthdaySeenSections",JSON.stringify([...seen]));
+    const dc=$("#discoverCount"); if(dc)dc.textContent=Math.min(100,Math.round(seen.size/16*100))+"%";
+  };
+  addEventListener("scroll",updateScroll,{passive:true});setInterval(updateScroll,1000);updateScroll();
+
+  // Command palette: search/navigation/actions without adding another dependency.
+  const palette=document.createElement("div");
+  palette.className="command-palette";
+  palette.innerHTML='<div class="palette-box" role="dialog" aria-modal="true" aria-label="Birthday command palette"><input class="palette-input" placeholder="Type a command or section..." aria-label="Command search"><div class="palette-list"></div></div>';
+  document.body.appendChild(palette);
+  const pInput=$(".palette-input",palette),pList=$(".palette-list",palette);
+  const commands=[
+    ["fa-house","Go Home","Jump to the birthday server home","home"],
+    ["fa-user-astronaut","Inspect Players","Open Naren & Chilley profiles","profiles"],
+    ["fa-box-open","Open Loot","Open birthday inventory","gifts"],
+    ["fa-scroll","Read Lore","Open server history","lore"],
+    ["fa-gamepad","Play Trivia","Start the trivia quest","trivia"],
+    ["fa-comments","Guestbook","Leave a birthday message","guestbook"],
+    ["fa-bolt","Expansion","Open the expansion pack","vibe-zone"],
+    ["fa-camera","Memory Vault","Open the real photo memories","memory-vault"],
+    ["fa-fireworks","Grand Finale","Jump to fireworks","finale"],
+    ["fa-wand-magic-sparkles","Max Hype","Celebrate with a burst","hype"]
+  ];
+  function renderCommands(q=""){
+    const query=q.toLowerCase().trim();
+    const list=commands.filter(c=>(c[1]+" "+c[2]).toLowerCase().includes(query));
+    pList.innerHTML=list.map((c,i)=>'<button class="palette-item" data-cmd="'+c[3]+'"><i class="fa-solid '+c[0]+'"></i><span><b>'+c[1]+'</b><small>'+c[2]+'</small></span></button>').join("")||'<div style="padding:20px;color:#888">no command found</div>';
+  }
+  function openPalette(){palette.classList.add("open");pInput.value="";renderCommands();setTimeout(()=>pInput.focus(),20)}
+  function closePalette(){palette.classList.remove("open")}
+  renderCommands();
+  pInput.addEventListener("input",()=>renderCommands(pInput.value));
+  palette.addEventListener("click",e=>{if(e.target===palette)closePalette();const b=e.target.closest("[data-cmd]");if(!b)return;const c=b.dataset.cmd;closePalette();if(c==="hype"){safe(()=>window.confetti?.({particleCount:180,spread:100,origin:{y:.65}}));safe(()=>typeof beep==="function"&&beep(880,.08,"sine"));showEgg("MAX HYPE","the birthday server has been overclocked.");return}document.getElementById(c)?.scrollIntoView({behavior:"smooth",block:"start"})});
+  addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();palette.classList.contains("open")?closePalette():openPalette()}if(e.key==="Escape")closePalette()});
+
+  // AI-style local concierge: deterministic, private, no API call.
+  const ai=document.createElement("section");
+  ai.className="ai-console";
+  ai.innerHTML='<div class="ai-head"><span class="ai-orb"><i class="fa-solid fa-sparkles"></i></span><div><strong>BIRTHDAY SERVER AI</strong><small>Local celebration concierge • no account data required</small></div><span class="ai-status">● READY</span></div><div class="ai-body"><div class="ai-reply" id="aiReply">ask me what to explore, what to unlock, or how to complete the birthday quest.</div><div class="ai-actions"><button data-ai="tour">give me a tour</button><button data-ai="quest">what should i do?</button><button data-ai="memories">show me memories</button><button data-ai="chaos">activate chaos</button></div></div>';
+  const home=$(".hero"); if(home)home.after(ai);
+  const replies={
+    tour:"start with the two player cards, then open a gift, complete trivia, visit the Memory Vault, and finish with the Grand Finale.",
+    quest:"your birthday quest is simple: talk to both players, unbox a gift, finish trivia, then explore the expansion pack. every interaction builds the session.",
+    memories:"the Memory Vault contains the real photo archive you added, presented as interactive polaroid-style cards with flip notes and hype counters.",
+    chaos:"CHAOS PROTOCOL: pizza rain + confetti. if the admin terminal is available, :spawn pizza is your emergency button. otherwise this server remains only moderately unhinged."
+  };
+  ai.addEventListener("click",e=>{const b=e.target.closest("[data-ai]");if(!b)return;$("#aiReply",ai).textContent=replies[b.dataset.ai]||"the server is thinking...";safe(()=>typeof beep==="function"&&beep(660,.06,"triangle"));});
+  
+  // Back-to-top floating control.
+  const os=document.createElement("div");os.className="birthday-os";
+  os.innerHTML='<button class="os-fab back-top" aria-label="Back to top" title="Back to top"><i class="fa-solid fa-arrow-up"></i></button><button class="os-fab" id="paletteFab" aria-label="Open command palette" title="Command palette"><i class="fa-solid fa-terminal"></i></button>';
+  document.body.appendChild(os);
+  const back=$(".back-top",os);
+  addEventListener("scroll",()=>back.classList.toggle("show",scrollY>700),{passive:true});
+  back.onclick=()=>scrollTo({top:0,behavior:"smooth"});
+  $("#paletteFab",os).onclick=openPalette;
+
+  // Install prompt for supported browsers.
+  let deferredInstall=null;
+  const banner=document.createElement("div");banner.className="install-banner";
+  banner.innerHTML='<p><b>birthday server detected.</b><br>install it like an app for quick access.</p><button id="installApp">INSTALL</button><button id="dismissInstall" aria-label="Dismiss">×</button>';
+  document.body.appendChild(banner);
+  addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstall=e;banner.classList.add("show")});
+  $("#installApp",banner).onclick=async()=>{if(!deferredInstall)return;deferredInstall.prompt();await deferredInstall.userChoice;deferredInstall=null;banner.classList.remove("show")};
+  $("#dismissInstall",banner).onclick=()=>banner.classList.remove("show");
+
+  // Secret keyboard phrase / Konami-style sequence.
+  let seq=[];
+  const target=["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
+  addEventListener("keydown",e=>{seq.push(e.key);if(seq.length>target.length)seq.shift();if(target.every((k,i)=>seq[i]?.toLowerCase?.()===k.toLowerCase())){seq=[];showEgg("SECRET SERVER MODE","you found the hidden birthday developer room.");safe(()=>window.confetti?.({particleCount:260,spread:130,origin:{y:.5}}));document.body.classList.add("admin-godmode");setTimeout(()=>document.body.classList.remove("admin-godmode"),7000)}});
+
+  function showEgg(title,sub){
+    const el=document.createElement("div");el.className="easter-egg";el.innerHTML='<div class="egg-card"><b>'+title+'</b><span>'+sub+'</span></div>';document.body.appendChild(el);requestAnimationFrame(()=>el.classList.add("show"));setTimeout(()=>el.remove(),2100);
+  }
+
+  // PWA service worker for local shell/assets. Safe no-op on unsupported/file contexts.
+  if("serviceWorker" in navigator && location.protocol.startsWith("http")) safe(()=>navigator.serviceWorker.register("./sw.js"));
+})();
