@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#191b1d">
-  <meta name="description" content="The Chilley & Naren Birthday Server — a Roblox-inspired interactive birthday experience.">
+  <meta name="theme-color" content="#191B1D">
+  <meta name="description" content="The Chilley & Naren Birthday Server — a Roblox-inspired interactive celebration.">
   <title>Happy Birthday Chilley & Naren! | Birthday Server</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
 
-  <!-- Optional visual helper; the site still works without it. -->
+  <!-- Optional visual confetti helper. All core interactions still work without it. -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -28,27 +28,22 @@
       <span><b>ROBLOX</b><small>BIRTHDAY EDITION</small></span>
     </a>
 
-    <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation">
-      <i class="fa-solid fa-bars"></i>
-    </button>
+    <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation"><i class="fa-solid fa-bars"></i></button>
 
     <nav id="nav">
       <a class="active" href="#home"><i class="fa-solid fa-house"></i><span>Home</span></a>
+      <a href="#profiles"><i class="fa-solid fa-id-card"></i><span>Profiles</span></a>
       <a href="#stats"><i class="fa-solid fa-chart-simple"></i><span>Player Stats</span></a>
       <a href="#gifts"><i class="fa-solid fa-box-open"></i><span>Inventory</span></a>
+      <a href="#lore"><i class="fa-solid fa-scroll"></i><span>Server Lore</span></a>
       <a href="#guestbook"><i class="fa-solid fa-comments"></i><span>Guestbook</span></a>
       <a href="#trivia"><i class="fa-solid fa-gamepad"></i><span>Trivia</span></a>
     </nav>
 
     <div class="top-actions">
-      <label class="search">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <input id="search" placeholder="Search Chilley & Naren..." aria-label="Search the birthday server">
-      </label>
-      <div class="currency"><span class="robux">R$</span><strong>999,999</strong><small>BIRTHDAY ROBUX</small></div>
-      <button id="soundToggle" class="icon-btn" aria-label="Toggle sound" title="Toggle sound">
-        <i class="fa-solid fa-volume-high"></i>
-      </button>
+      <label class="search"><i class="fa-solid fa-magnifying-glass"></i><input id="search" placeholder="Search Chilley & Naren..." aria-label="Search"></label>
+      <div class="currency"><span class="robux">R$</span><strong id="robuxCount">999,999</strong><small>BIRTHDAY ROBUX</small></div>
+      <button id="soundToggle" class="icon-btn" aria-label="Toggle sound" title="Toggle sound"><i class="fa-solid fa-volume-high"></i></button>
     </div>
   </header>
 
@@ -63,14 +58,14 @@
     <section id="home" class="hero section">
       <div class="hero-grid">
         <div class="hero-copy">
-          <div class="server-pill"><span class="online-dot"></span> PARTY SERVER LIVE <span>•</span> NOOB-FRIENDLY</div>
+          <div class="server-pill"><span class="online-dot"></span> PARTY SERVER LIVE <span>•</span> BROTHERHOOD EVENT</div>
           <p class="eyebrow">★ SPECIAL EVENT • TWO PLAYERS • ONE LEGENDARY DAY</p>
           <h1>HAPPY BIRTHDAY<br><span>CHILLEY</span> <em>&</em> <span class="gold">NAREN</span>!</h1>
-          <p class="lead">Leveling up today! Enter the birthday server, inspect the VIP players, unbox ridiculous loot, and leave a message before the party ends.</p>
+          <p class="lead">Leveling up today. Enter the birthday server, inspect the VIP players, hear their custom dialogue, unbox ridiculous loot, read the lore, and leave a message for the two legends.</p>
 
           <div class="hero-actions">
             <button class="btn primary" id="celebrateBtn"><i class="fa-solid fa-play"></i> JOIN SERVER <small>(Celebrate)</small></button>
-            <a class="btn secondary" href="#gifts"><i class="fa-solid fa-box-open"></i> SPAWN GIFTS</a>
+            <a class="btn secondary" href="#profiles"><i class="fa-solid fa-user-astronaut"></i> INSPECT PLAYERS</a>
           </div>
 
           <div class="server-meta">
@@ -82,81 +77,117 @@
         </div>
 
         <div class="avatars">
-          <article class="avatar-card cyan" data-player="Chilley">
-            <div class="card-tag">CO-HOST</div>
-            <div class="status"><span></span> ONLINE</div>
-            <div class="avatar-stage">
-              <div class="avatar chilley">
-                <div class="hat"></div><div class="head"></div><div class="face">•ᴗ•</div><div class="body"></div>
-                <div class="arm left"></div><div class="arm right"></div><div class="leg l"></div><div class="leg r"></div>
-              </div>
-            </div>
-            <div class="player-card-info">
-              <div class="mini-line"><span class="level">LEVEL 99</span><span class="rarity">LEGENDARY</span></div>
-              <h2>Chilley</h2><p>Master Builder • Birthday VIP</p>
-              <div class="stat-bars"><span><i style="width:96%"></i></span><b>HYPE 96</b></div>
-              <div class="badge-row"><span>🏆 OG Member</span><span>⚡ Speedrunner</span></div>
-            </div>
-          </article>
-
-          <article class="avatar-card gold" data-player="Naren">
-            <div class="card-tag gold-tag">VIP HOST</div>
+          <article class="avatar-card cyan avatar-clickable" data-dialogue="naren" tabindex="0" role="button" aria-label="Talk to Naren">
+            <div class="card-tag">[GOAT] NAREN_LEVEL17</div>
             <div class="status"><span></span> ONLINE</div>
             <div class="avatar-stage">
               <div class="avatar naren">
                 <div class="cap"></div><div class="head"></div><div class="face">•ᴗ•</div><div class="body"></div>
                 <div class="arm left"></div><div class="arm right"></div><div class="leg l"></div><div class="leg r"></div>
               </div>
+              <span class="interact-hint">CLICK TO TALK • +100 XP</span>
             </div>
             <div class="player-card-info">
-              <div class="mini-line"><span class="level gold-level">LEVEL 99</span><span class="rarity gold-rarity">MYTHIC</span></div>
-              <h2>Naren</h2><p>Pro Gamer • Birthday VIP</p>
-              <div class="stat-bars gold-bars"><span><i style="width:100%"></i></span><b>HYPE 100</b></div>
-              <div class="badge-row"><span>👑 Party Host</span><span>🚀 Hype Master</span></div>
+              <div class="mini-line"><span class="level gold-level">LEVEL 17</span><span class="rarity gold-rarity">THE GOAT</span></div>
+              <h2>Naren</h2><p>Legendary Big Brother • Team Captain</p>
+              <div class="stat-bars gold-bars"><span><i style="width:100%"></i></span><b>GOAT 100</b></div>
+              <div class="badge-row"><span>🐐 Genuine GOAT</span><span>🛡️ Big Brother Aegis</span></div>
+            </div>
+          </article>
+
+          <article class="avatar-card pink avatar-clickable" data-dialogue="chilley" tabindex="0" role="button" aria-label="Talk to Chilley">
+            <div class="card-tag pink-tag">[CHAOS] CHILLEY_LEVEL14</div>
+            <div class="status"><span></span> ONLINE</div>
+            <div class="avatar-stage">
+              <div class="avatar chilley">
+                <div class="hat"></div><div class="head"></div><div class="face">•ᴗ•</div><div class="body"></div>
+                <div class="arm left"></div><div class="arm right"></div><div class="leg l"></div><div class="leg r"></div>
+              </div>
+              <span class="interact-hint">CLICK TO TALK • CHAOS MODE</span>
+            </div>
+            <div class="player-card-info">
+              <div class="mini-line"><span class="level pink-level">LEVEL 14</span><span class="rarity pink-rarity">WILDCARD</span></div>
+              <h2>Chilley</h2><p>Chaotic Goofball • Heart of Pure Gold</p>
+              <div class="stat-bars pink-bars"><span><i style="width:100%"></i></span><b>CHAOS 100</b></div>
+              <div class="badge-row"><span>🌀 Chaos Mastermind</span><span>❤️ Heart of the Lobby</span></div>
             </div>
           </article>
         </div>
       </div>
 
       <div class="quest-panel">
-        <div><span class="quest-kicker">DAILY QUEST</span><strong>CELEBRATE THE TWO LEGENDS</strong><small>Complete 3 birthday activities to unlock MAX HYPE mode.</small></div>
-        <div class="quest-progress"><div><i style="width:66%"></i></div><b>2 / 3</b></div>
+        <div><span class="quest-kicker">DAILY QUEST</span><strong>CELEBRATE THE TWO LEGENDS</strong><small>Talk to both players, unbox one gift, and finish the trivia to unlock MAX HYPE.</small></div>
+        <div class="quest-progress"><div><i id="questProgress" style="width:25%"></i></div><b id="questLabel">1 / 4</b></div>
         <a href="#trivia" class="quest-button">CONTINUE QUEST <i class="fa-solid fa-arrow-right"></i></a>
       </div>
 
       <div class="particles" id="particles"></div>
     </section>
 
-    <section id="stats" class="section">
+    <section id="profiles" class="section">
       <div class="section-heading">
-        <div><span class="eyebrow">TAB MENU • PLAYER LIST</span><h2>SERVER <span>LEADERBOARD</span></h2></div>
-        <span class="live-chip">● LIVE</span>
+        <div><span class="eyebrow">EXTENDED CHARACTER BIOS • DEEP PERSONALIZATION</span><h2>PLAYER <span>PROFILES</span></h2></div>
+        <span class="live-chip">● LORE LOADED</span>
       </div>
 
+      <div class="profile-grid">
+        <article class="profile-card goat">
+          <div class="profile-banner">
+            <div><span class="profile-label">[GOAT] NAREN_LEVEL17</span><h3>Naren — The Big Brother & Legendary GOAT</h3><p>Age 17 • The Legendary Big Brother / Team Captain</p></div>
+            <div class="profile-level">LVL 17</div>
+          </div>
+          <div class="profile-body">
+            <div class="bio-box"><span>SERVER BIO</span><p>Naren is genuinely the absolute GOAT of the server. Turning 17 today, he stands as the ultimate big brother figure—always kind, protective, and ready to lend a helping hand to anyone in the lobby. Whether it's guiding the squad through tough game raids, offering real-life advice, or pulling off clutch plays when everything is on the line, Naren represents true leadership, patience, and unwavering loyalty. He isn't just a teammate; he's family.</p></div>
+            <div class="metrics">
+              <h4>PLAYER METRICS</h4>
+              <div class="metric"><label>GOAT Energy & Loyalty <b>100/100</b></label><span><i style="width:100%"></i></span></div>
+              <div class="metric"><label>Kindness & Support <b>100/100</b></label><span><i style="width:100%"></i></span></div>
+              <div class="metric"><label>Big Brother Shielding <b>100/100</b></label><span><i style="width:100%"></i></span></div>
+              <div class="metric"><label>Clutch Play Potential <b>99/100</b></label><span><i style="width:99%"></i></span></div>
+              <div class="metric"><label>Patience & Guidance <b>98/100</b></label><span><i style="width:98%"></i></span></div>
+            </div>
+            <div class="achievement-grid">
+              <button class="achievement" title="Granted for being the most reliable, kind-hearted, and legendary friend in the server history."><span>🐐</span><strong>The Genuine GOAT</strong><small>Legendary loyalty achievement</small></button>
+              <button class="achievement" title="Awarded for always looking out for the team and lifting everyone up."><span>🛡️</span><strong>Big Brother Aegis</strong><small>Unbreakable protection badge</small></button>
+              <button class="achievement" title="Celebrates 17 years of leveling up in life and dominating every match."><span>🏆</span><strong>Level 17 Senior Champion</strong><small>17-year veteran unlock</small></button>
+            </div>
+          </div>
+        </article>
+
+        <article class="profile-card chaos">
+          <div class="profile-banner">
+            <div><span class="profile-label pink-text">[CHAOS] CHILLEY_LEVEL14</span><h3>Chilley — The Chaotic & Affectionate Little Bro</h3><p>Age 14 • The Chaotic Goofball / Heart of Pure Gold</p></div>
+            <div class="profile-level pink-level">LVL 14</div>
+          </div>
+          <div class="profile-body">
+            <div class="bio-box"><span>SERVER BIO</span><p>Chilley is the wildest, funniest, and most delightfully chaotic player on the entire platform. Turning 14 today, he brings unhinged energy, goofy plays, and non-stop laughter to every lobby he enters. But behind all the funny shenanigans and goofy jokes lies the most affectionate, loving, and warm-hearted little brother anyone could ever ask for. His love for his friends is genuine and unconditional, making him the heart and soul of the squad.</p></div>
+            <div class="metrics">
+              <h4>PLAYER METRICS</h4>
+              <div class="metric"><label>Chaotic Energy <b>100/100</b></label><span><i style="width:100%"></i></span></div>
+              <div class="metric"><label>Goofiness & Comedy <b>100/100</b></label><span><i style="width:100%"></i></span></div>
+              <div class="metric"><label>Affection & Heart <b>100/100</b></label><span><i style="width:100%"></i></span></div>
+              <div class="metric"><label>Little Brother Charm <b>100/100</b></label><span><i style="width:100%"></i></span></div>
+              <div class="metric"><label>Predictability <b>0/100</b></label><span><i style="width:2%"></i></span></div>
+            </div>
+            <div class="achievement-grid">
+              <button class="achievement" title="Awarded for turning every calm game into hilarious, chaotic madness."><span>🌀</span><strong>Chaos Mastermind</strong><small>Maximum goofiness achievement</small></button>
+              <button class="achievement" title="Granted for unconditional affection, kindness, and making everyone feel loved."><span>❤️</span><strong>Heart of the Lobby</strong><small>Pure gold badge</small></button>
+              <button class="achievement" title="Marks 14 years of pure humor, goofy moments, and unmatched loyalty."><span>🎈</span><strong>Level 14 Wildcard</strong><small>14-year chaos unlock</small></button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="stats" class="section">
+      <div class="section-heading"><div><span class="eyebrow">TAB MENU • PLAYER LIST</span><h2>SERVER <span>LEADERBOARD</span></h2></div><span class="live-chip">● LIVE</span></div>
       <div class="panel table-wrap">
-        <div class="table-topbar">
-          <div><i class="fa-solid fa-list-ol"></i> Birthday VIP Instance</div>
-          <span>MAX PLAYERS: <b>2 / 2</b></span>
-        </div>
+        <div class="table-topbar"><div><i class="fa-solid fa-list-ol"></i> Birthday VIP Instance</div><span>MAX PLAYERS: <b>2 / 2</b></span></div>
         <table>
           <thead><tr><th>RANK</th><th>PLAYER</th><th>ROLE</th><th>BIRTHDAY LEVEL</th><th>FAVOURITE GAMES</th><th>SPECIAL BADGES</th></tr></thead>
           <tbody>
-            <tr>
-              <td><b class="rank">#1</b></td>
-              <td><strong>Chilley</strong><small>Master Builder</small></td>
-              <td>Co-Host / Developer</td>
-              <td><span class="vip">LVL 99 • UNLOCKED</span></td>
-              <td>Bloxburg • Adopt Me</td>
-              <td><div class="badges"><button title="Best Friend — certified day-one teammate">🏆</button><button title="Speedrunner — somehow always first">⚡</button><button title="Cake Eater — inventory mysteriously empty">🎂</button></div></td>
-            </tr>
-            <tr>
-              <td><b class="rank">#2</b></td>
-              <td><strong>Naren</strong><small>Pro Gamer</small></td>
-              <td>Co-Host / VIP</td>
-              <td><span class="vip gold-vip">LVL 99 • UNLOCKED</span></td>
-              <td>Arsenal • Bloxburg</td>
-              <td><div class="badges"><button title="Party Host — server owner energy">👑</button><button title="Clutch Gamer — panic, then somehow wins">🎮</button><button title="Hype Master — +100 server energy">🚀</button></div></td>
-            </tr>
+            <tr><td><b class="rank">#1</b></td><td><strong>Naren</strong><small>[GOAT] Naren_Level17</small></td><td>Legendary Big Brother / Team Captain</td><td><span class="vip gold-vip">LVL 17 • UNLOCKED</span></td><td>Bloxburg • Adopt Me</td><td><div class="badges"><button title="The Genuine GOAT">🐐</button><button title="Big Brother Aegis">🛡️</button><button title="Level 17 Senior Champion">🏆</button></div></td></tr>
+            <tr><td><b class="rank">#2</b></td><td><strong>Chilley</strong><small>[CHAOS] Chilley_Level14</small></td><td>Chaotic Goofball / Heart of Pure Gold</td><td><span class="vip pink-vip">LVL 14 • UNLOCKED</span></td><td>Arsenal • Bloxburg</td><td><div class="badges"><button title="Chaos Mastermind">🌀</button><button title="Heart of the Lobby">❤️</button><button title="Level 14 Wildcard">🎈</button></div></td></tr>
           </tbody>
         </table>
       </div>
@@ -170,27 +201,66 @@
       <div class="gift-grid" id="giftGrid"></div>
     </section>
 
-    <section id="trivia" class="section">
-      <div class="section-heading">
-        <div><span class="eyebrow">MINI-GAME • CHILLEY & NAREN SERVER QUIZ</span><h2>TRIVIA <span>ROUND</span></h2></div>
-        <span id="scoreChip" class="score-chip">R$ 0</span>
+    <section id="lore" class="section">
+      <div class="section-heading"><div><span class="eyebrow">SERVER LOGS • BROTHERHOOD ARCHIVE</span><h2>SERVER <span>HISTORY</span></h2></div><span class="live-chip pink-chip">● LORE ARCHIVED</span></div>
+
+      <div class="timeline">
+        <article class="timeline-card">
+          <span class="timeline-index">LOG 01</span>
+          <div class="timeline-marker goat-marker">🐐</div>
+          <div><div class="timeline-date">THE GOAT ARRIVES</div><h3>Naren joins the lobby.</h3><p>The squad gains a kind, supportive big brother who keeps everyone grounded, shares advice, helps through difficult raids, and somehow always has a clutch solution.</p><span class="log-tag">[SYSTEM] PLAYER NAREN → SUPPORT CLASS UNLOCKED</span></div>
+        </article>
+        <article class="timeline-card">
+          <span class="timeline-index">LOG 02</span>
+          <div class="timeline-marker chaos-marker">🌀</div>
+          <div><div class="timeline-date">THE CHAOS BEGINS</div><h3>Chilley enters the server.</h3><p>The calm lobby lasts approximately four seconds. Goofy plays, wild jokes, accidental chaos, and unconditional affection become permanent server mechanics.</p><span class="log-tag">[SYSTEM] PLAYER CHILLEY → CHAOS MODE ENABLED</span></div>
+        </article>
+        <article class="timeline-card">
+          <span class="timeline-index">LOG 03</span>
+          <div class="timeline-marker duo-marker">🎂</div>
+          <div><div class="timeline-date">LEVEL 17 & 14 DOUBLE EVENT</div><h3>The birthday server goes legendary.</h3><p>Two milestones collide in one celebration. Thanks to Naren for being the GOAT and Chilley for being the heart of the chaos—every day becomes a little funnier and a little more wholesome.</p><span class="log-tag">[SYSTEM] DOUBLE BIRTHDAY EVENT → MAX HYPE UNLOCKED</span></div>
+        </article>
       </div>
+    </section>
+
+    <section id="testimonials" class="section">
+      <div class="section-heading"><div><span class="eyebrow">BROTHERHOOD TESTIMONIAL GENERATOR</span><h2>GLOBAL <span>CHAT</span></h2></div><span class="hint">Generate a message</span></div>
+      <div class="testimonial panel">
+        <div class="toggle-row">
+          <button class="toggle-choice active" data-testimonial="naren">Express Gratitude to Naren (The GOAT)</button>
+          <button class="toggle-choice" data-testimonial="chilley">Send Love to Chilley (The Chaos King)</button>
+        </div>
+        <div class="testimonial-output" id="testimonialOutput"></div>
+        <div class="testimonial-actions">
+          <button class="btn secondary" id="randomTestimonial"><i class="fa-solid fa-shuffle"></i> GENERATE ANOTHER</button>
+          <button class="btn primary" id="sendGenerated"><i class="fa-solid fa-paper-plane"></i> SEND TO GUESTBOOK</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="trivia" class="section">
+      <div class="section-heading"><div><span class="eyebrow">MINI-GAME • HOW WELL DO YOU KNOW THEM?</span><h2>SERVER <span>TRIVIA</span></h2></div><span id="scoreChip" class="score-chip">R$ 0</span></div>
       <div class="quiz panel" id="quiz"></div>
     </section>
 
     <section id="guestbook" class="section">
-      <div class="section-heading">
-        <div><span class="eyebrow">SERVER CHAT • WISH TERMINAL</span><h2>GUEST <span>BOOK</span></h2></div>
-        <span class="live-chip">● LIVE CHAT</span>
+      <div class="section-heading"><div><span class="eyebrow">SERVER CHAT • WISH TERMINAL</span><h2>LIVE <span>GUESTBOOK</span></h2></div><span class="live-chip">● LIVE CHAT</span></div>
+
+      <div class="quick-chat-row">
+        <span class="quick-label">QUICK CHAT:</span>
+        <button class="quick-chat" data-quick="Happy Birthday GOAT Naren! 🐐">Happy Birthday GOAT Naren!</button>
+        <button class="quick-chat" data-quick="Chilley you are hilarious! ❤️">Chilley you are hilarious!</button>
+        <button class="quick-chat" data-quick="Best duo on Roblox! 🎮">Best duo on Roblox!</button>
       </div>
+
       <div class="guest-grid">
         <form class="panel wish-form" id="wishForm">
-          <div class="terminal-head"><i class="fa-solid fa-terminal"></i> SEND BIRTHDAY WISH</div>
+          <div class="terminal-head"><i class="fa-solid fa-terminal"></i> /w BIRTHDAY MESSAGE</div>
           <label>Your display name<input id="guestName" maxlength="28" required placeholder="FriendName"></label>
-          <label>Avatar icon<select id="guestAvatar"><option>😎</option><option>🧱</option><option>🎮</option><option>👑</option><option>🐸</option><option>🔥</option></select></label>
-          <label>Message<textarea id="guestMessage" maxlength="180" required placeholder="gg Chilley & Naren!"></textarea></label>
+          <label>Avatar icon<select id="guestAvatar"><option>😎</option><option>🧱</option><option>🎮</option><option>👑</option><option>🐸</option><option>🔥</option><option>🐐</option><option>❤️</option></select></label>
+          <label>Message<textarea id="guestMessage" maxlength="180" required placeholder="[Click here to type a birthday message...]"></textarea></label>
           <button class="btn primary" type="submit"><i class="fa-solid fa-paper-plane"></i> SEND TO SERVER</button>
-          <small class="privacy-note">Stored locally in this browser — no account or login required.</small>
+          <small class="privacy-note">Saved locally in this browser — no account or login required.</small>
         </form>
         <div class="panel chat" id="chat" aria-live="polite"></div>
       </div>
@@ -198,8 +268,8 @@
   </main>
 
   <footer>
-    <div><b>◈ BIRTHDAY SERVER v2.0</b><span>MADE FOR CHILLEY & NAREN</span></div>
-    <button id="resetData">Reset local guestbook</button>
+    <div><b>◈ BIRTHDAY SERVER v3.0</b><span>MADE FOR CHILLEY & NAREN</span></div>
+    <button id="resetData">Reset local birthday data</button>
   </footer>
 
   <dialog id="giftModal" class="modal">
@@ -207,6 +277,19 @@
       <button class="close" data-close aria-label="Close gift modal">×</button>
       <div id="modalContent"></div>
       <button class="btn primary modal-equip" id="equipLoot"><i class="fa-solid fa-check"></i> EQUIP ITEM</button>
+    </div>
+  </dialog>
+
+  <dialog id="dialogueModal" class="modal dialogue-modal">
+    <div class="modal-box dialogue-box">
+      <button class="close" data-dialogue-close aria-label="Close dialogue">×</button>
+      <div id="dialoguePortrait" class="dialogue-portrait"></div>
+      <div class="dialogue-name" id="dialogueName">Player</div>
+      <div class="dialogue-bubble" id="dialogueText"></div>
+      <div class="dialogue-actions">
+        <button class="btn primary" id="dialogueNext">NEXT <i class="fa-solid fa-angle-right"></i></button>
+      </div>
+      <div class="dialogue-progress" id="dialogueProgress"></div>
     </div>
   </dialog>
 
