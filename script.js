@@ -854,3 +854,60 @@ updateQuest();
   // PWA service worker for local shell/assets. Safe no-op on unsupported/file contexts.
   if("serviceWorker" in navigator && location.protocol.startsWith("http")) safe(()=>navigator.serviceWorker.register("./sw.js"));
 })();
+/* =========================================================
+   LEGACY CLIENT // VANILLA WEBGL R6 EMULATION
+   ========================================================= */
+(()=>{
+  const canvas=document.getElementById("legacyWebGL");
+  if(!canvas)return;
+  const gl=canvas.getContext("webgl",{antialias:true,alpha:false});
+  const coords=document.getElementById("clientCoords");
+  if(!gl){if(coords)coords.textContent="WEBGL UNAVAILABLE";return}
+
+  const vs="attribute vec3 aPos;attribute vec3 aNormal;uniform mat4 uMVP;uniform mat4 uModel;varying vec3 vN;void main(){vec4 p=uModel*vec4(aPos,1.0);vN=mat3(uModel)*aNormal;gl_Position=uMVP*vec4(aPos,1.0);}";
+  const fs="precision mediump float;uniform vec3 uColor;varying vec3 vN;void main(){vec3 n=normalize(vN);vec3 light=normalize(vec3(-.35,.9,.55));float d=max(dot(n,light),0.0);gl_FragColor=vec4(uColor*(.55+d*.55)+.1,1.0);}";
+  function shader(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s}
+  const program=gl.createProgram();gl.attachShader(program,shader(gl.VERTEX_SHADER,vs));gl.attachShader(program,shader(gl.FRAGMENT_SHADER,fs));gl.linkProgram(program);gl.useProgram(program);
+  const posLoc=gl.getAttribLocation(program,"aPos"),normalLoc=gl.getAttribLocation(program,"aNormal"),mvpLoc=gl.getUniformLocation(program,"uMVP"),modelLoc=gl.getUniformLocation(program,"uModel"),colorLoc=gl.getUniformLocation(program,"uColor");
+
+  const verts=[];
+  function face(a,b,c,d,n){verts.push(...a,...b,...c,...n,...n,...n,...a,...c,...d,...n,...n,...n)}
+  const p=[[-.5,-.5,.5],[.5,-.5,.5],[.5,.5,.5],[-.5,.5,.5],[-.5,-.5,-.5],[.5,-.5,-.5],[.5,.5,-.5],[-.5,.5,-.5]];
+  face(p[0],p[1],p[2],p[3],[0,0,1]);face(p[1],p[5],p[6],p[2],[1,0,0]);face(p[5],p[4],p[7],p[6],[0,0,-1]);face(p[4],p[0],p[3],p[7],[-1,0,0]);face(p[3],p[2],p[6],p[7],[0,1,0]);face(p[4],p[5],p[1],p[0],[0,-1,0]);
+  const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(verts),gl.STATIC_DRAW);
+  const stride=6*4;gl.enableVertexAttribArray(posLoc);gl.vertexAttribPointer(posLoc,3,gl.FLOAT,false,stride,0);gl.enableVertexAttribArray(normalLoc);gl.vertexAttribPointer(normalLoc,3,gl.FLOAT,false,stride,3*4);
+
+  function ident(){return [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]}
+  function mul(a,b){const o=new Array(16);for(let c=0;c<4;c++)for(let r=0;r<4;r++)o[c*4+r]=a[r]*b[c*4]+a[4+r]*b[c*4+1]+a[8+r]*b[c*4+2]+a[12+r]*b[c*4+3];return o}
+  function translate(x,y,z){const m=ident();m[12]=x;m[13]=y;m[14]=z;return m}
+  function scale(x,y,z){const m=ident();m[0]=x;m[5]=y;m[10]=z;return m}
+  function rotY(a){const m=ident(),c=Math.cos(a),s=Math.sin(a);m[0]=c;m[2]=-s;m[8]=s;m[10]=c;return m}
+  function rotX(a){const m=ident(),c=Math.cos(a),s=Math.sin(a);m[5]=c;m[6]=s;m[9]=-s;m[10]=c;return m}
+  function perspective(fov,aspect,n,f){const t=1/Math.tan(fov/2),m=new Array(16).fill(0);m[0]=t/aspect;m[5]=t;m[10]=(f+n)/(n-f);m[11]=-1;m[14]=(2*f*n)/(n-f);return m}
+  function camera(){return mul(translate(0,-1.7,-12),mul(rotX(pitch),rotY(yaw)))}
+  let yaw=.62,pitch=-.18,drag=false,lastX=0,lastY=0;
+  canvas.addEventListener("pointerdown",e=>{drag=true;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture(e.pointerId)});
+  canvas.addEventListener("pointermove",e=>{if(!drag)return;yaw+=(e.clientX-lastX)*.008;pitch+=(e.clientY-lastY)*.006;pitch=Math.max(-1,Math.min(.55,pitch));lastX=e.clientX;lastY=e.clientY});
+  canvas.addEventListener("pointerup",()=>drag=false);canvas.addEventListener("pointercancel",()=>drag=false);
+  document.getElementById("clientResetView")?.addEventListener("click",()=>{yaw=.62;pitch=-.18});
+  document.getElementById("clientFullscreen")?.addEventListener("click",()=>canvas.closest(".legacy-viewport-shell")?.requestFullscreen?.());
+
+  function resize(){const d=Math.min(devicePixelRatio||1,2),r=canvas.getBoundingClientRect();canvas.width=Math.max(1,r.width*d);canvas.height=Math.max(1,r.height*d);gl.viewport(0,0,canvas.width,canvas.height)}
+  addEventListener("resize",resize);resize();gl.enable(gl.DEPTH_TEST);gl.enable(gl.CULL_FACE);gl.clearColor(.46,.68,.84,1);
+
+  function cube(x,y,z,sx,sy,sz,color,rx=0){const model=mul(translate(x,y,z),mul(rotY(rx),scale(sx,sy,sz)));const mvp=mul(perspective(Math.PI/3,canvas.width/canvas.height,.1,100),mul(camera(),model));gl.uniformMatrix4fv(modelLoc,false,new Float32Array(model));gl.uniformMatrix4fv(mvpLoc,false,new Float32Array(mvp));gl.uniform3fv(colorLoc,new Float32Array(color));gl.drawArrays(gl.TRIANGLES,0,36)}
+  function draw(){
+    gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+    cube(0,-1.15,0,18,.25,18,[.34,.65,.30]);
+    for(let x=-8;x<=8;x++)for(let z=-7;z<=7;z++)cube(x*.62,-.98,z*.62,.52,.035,.52,[.43,.72,.37]);
+    cube(0,.15,0,1.25,1.55,.65,[.18,.43,.72]);cube(0,1.42,0,.9,.9,.9,[.94,.76,.48]);
+    cube(-.86,.15,0,.45,1.35,.5,[.94,.76,.48]);cube(.86,.15,0,.45,1.35,.5,[.94,.76,.48]);
+    cube(-.36,-1.05,0,.5,1.15,.55,[.16,.16,.18]);cube(.36,-1.05,0,.5,1.15,.55,[.16,.16,.18]);
+    cube(0,1.94,0,.98,.22,.98,[.83,.62,.08]);cube(0,2.10,0,.64,.20,.64,[.83,.62,.08]);
+    cube(-.22,1.46,.46,.09,.09,.04,[.05,.05,.05]);cube(.22,1.46,.46,.09,.09,.04,[.05,.05,.05]);
+    cube(-3,0,-2.7,2.8,2.2,2.4,[.48,.68,.42]);cube(3,.5,-3.5,2.4,3.2,2.4,[.67,.49,.31]);cube(-3,1.25,-2.7,3,.22,2.6,[.88,.48,.12]);
+    if(coords)coords.textContent="R6 • X:"+yaw.toFixed(2)+" Y:"+pitch.toFixed(2);
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
