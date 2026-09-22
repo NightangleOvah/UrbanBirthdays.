@@ -615,12 +615,14 @@ updateQuest();
 
   /* ---------- Memory Vault ---------- */
   const memories=[
-    {title:"GOAT MODE",icon:"🐐",tag:"NAREN • LVL 17",note:"The kind of teammate who turns a rough lobby into a safe place. Big Brother Aegis equipped.",tone:0},
-    {title:"CHAOS MODE",icon:"🌀",tag:"CHILLEY • LVL 14",note:"The server survived approximately four seconds before the jokes, pizza and chaos started.",tone:1},
-    {title:"DUO QUEUE",icon:"🎮",tag:"BROTHERHOOD ARCHIVE",note:"Two different playstyles, one permanent party. The duo event is the lore.",tone:2},
-    {title:"PIZZA PROTOCOL",icon:"🍕",tag:"SECRET MEMORY",note:"Emergency pizza was deployed. No one knows who ordered it. Everyone was happy.",tone:3},
-    {title:"BLOXY NIGHT",icon:"🏆",tag:"AWARDS ARCHIVE",note:"Golden trophies, bright spotlights and the two birthday legends taking the stage.",tone:4},
-    {title:"MAX HYPE",icon:"❤️",tag:"SERVER SNAPSHOT",note:"The best memories are the little moments: laughs, support, ridiculous jokes and showing up.",tone:5}
+    {title:"ORIGINAL PLAYER",icon:"📸",tag:"NAREN • MEMORY 01",image:"assets/memories/memory-archive.jpg",pos:"0% 0%",note:"An early real-life snapshot from the archive — the beginning of the player lore.",tone:0},
+    {title:"GOAT PROFILE",icon:"🐐",tag:"NAREN • MEMORY 02",image:"assets/memories/memory-archive.jpg",pos:"33.33% 0%",note:"The Naren profile card: GOAT mode, strategy, discipline and the server-pillar era.",tone:1},
+    {title:"MAIN CHARACTER",icon:"⚡",tag:"NAREN • MEMORY 03",image:"assets/memories/memory-archive.jpg",pos:"66.66% 0%",note:"A neon Naren portrait from the birthday creative archive.",tone:2},
+    {title:"SERVER SUCCESS",icon:"🎮",tag:"GAME LORE • MEMORY 04",image:"assets/memories/memory-archive.jpg",pos:"100% 0%",note:"A completed-game results screen preserved as part of the birthday server lore.",tone:3},
+    {title:"CHILLEY // CHAOS MODE",icon:"🌀",tag:"CHILLEY • MEMORY 05",image:"assets/memories/memory-archive.jpg",pos:"0% 100%",note:"Chilley in full chaos-mode profile energy. Certified wildcard material.",tone:4},
+    {title:"THEATER ARC",icon:"🎭",tag:"MEMORY 06",image:"assets/memories/memory-archive.jpg",pos:"33.33% 100%",note:"A colorful performance moment saved into the shared memory vault.",tone:5},
+    {title:"LORE DROP",icon:"🖤",tag:"DWEL.FIX • MEMORY 07",image:"assets/memories/memory-archive.jpg",pos:"66.66% 100%",note:"A monochrome community-style graphic preserved as a snapshot from the archive.",tone:6},
+    {title:"CALMED THIS BI FINALLY",icon:"📸",tag:"MEMORY 08 • WHOLESOME MOMENT",image:"assets/memories/memory-archive.jpg",pos:"100% 100%",note:"A candid family moment from the photo archive — one of the softer memories.",tone:7}
   ];
   const memoryGrid=$e("#memoryGrid");
   const memHype=expansion.memHype||{};
@@ -633,7 +635,7 @@ updateQuest();
   }
   function renderMemories(){
     if(!memoryGrid)return;
-    memoryGrid.innerHTML=memories.map((m,i)=>'<article class="memory-card" data-memory="'+i+'"><div class="memory-inner"><div class="memory-face memory-front"><div class="memory-photo"><span>'+m.icon+'</span></div><h3>'+m.title+'</h3><small>'+m.tag+'</small></div><div class="memory-face memory-back"><div><span class="eyebrow">SNAPSHOT NOTE</span><p class="note">'+m.note+'</p></div><div><button class="audio-stamp" data-stamp="'+i+'"><i class="fa-solid fa-volume-high"></i> PLAY MEMORY AUDIO</button><div class="hype-row"><button class="hype-btn" data-hype="'+i+'">❤️ HYPE</button><span class="hype-count">'+Number(memHype[i]||0)+'</span></div></div></div></div></article>').join("");
+    memoryGrid.innerHTML=memories.map((m,i)=>'<article class="memory-card" data-memory="'+i+'"><div class="memory-inner"><div class="memory-face memory-front"><div class="memory-photo photo-memory" style="--memory-pos:'+m.pos+'"><img src="'+m.image+'" alt="'+m.title+'" loading="lazy"><span class="memory-icon">'+m.icon+'</span></div><h3>'+m.title+'</h3><small>'+m.tag+'</small></div><div class="memory-face memory-back"><div><span class="eyebrow">SNAPSHOT NOTE</span><p class="note">'+m.note+'</p></div><div><button class="audio-stamp" data-stamp="'+i+'"><i class="fa-solid fa-volume-high"></i> PLAY MEMORY AUDIO</button><div class="hype-row"><button class="hype-btn" data-hype="'+i+'">❤️ HYPE</button><span class="hype-count">'+Number(memHype[i]||0)+'</span></div></div></div></div></article>').join("");
     $$(".memory-card").forEach(card=>card.addEventListener("click",()=>card.classList.toggle("flipped")));
     $$("[data-hype]").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();hypeMemory(Number(b.dataset.hype))}));
     $$("[data-stamp]").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();unlockAudio();memorySound(Number(b.dataset.stamp));toast("Memory audio stamp played.")}));
