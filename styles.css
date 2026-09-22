@@ -559,3 +559,42 @@ select{background:#fff!important;border:1px solid #777!important}
   .section-heading h2{font-size:17px!important}
   .hero-copy{padding:10px!important}
 }
+
+
+/* =========================================================
+   LEGACY 2008 CLIENT // WEBGL VIEWPORT
+   ========================================================= */
+.retro-client-section{background:#fff!important}
+.legacy-client{
+  display:grid!important;
+  grid-template-columns:175px 1fr!important;
+  min-height:430px!important;
+  border:1px solid #555!important;
+  background:#cfcfcf!important;
+  box-shadow:inset 0 1px #fff,0 2px 5px rgba(0,0,0,.2)!important;
+}
+.legacy-sidebar{
+  background:linear-gradient(90deg,#ececec,#cfcfcf)!important;
+  border-right:1px solid #555!important;
+  padding:0!important;
+  font:11px Verdana,Tahoma,Arial,sans-serif!important;
+}
+.legacy-window-title,.legacy-titlebar{
+  color:#fff!important;
+  font-weight:bold!important;
+  text-shadow:1px 1px #274664!important;
+  background:linear-gradient(#83acd3,#4d77a0 48%,#365d82 49%,#6c94bb)!important;
+  border-bottom:1px solid #294967!important;
+}
+.legacy-window-title{padding:5px 8px!important}
+.legacy-sidebar-title{font-weight:bold!important;color:#444!important;padding:11px 9px 4px!important;border-bottom:1px solid #aaa}
+.legacy-sidebar a,.legacy-sidebar button{display:block!important;width:100%!important;box-sizing:border-box!important;padding:6px 10px!important;text-align:left!important;background:linear-gradient(#fff,#ddd)!important;border:0!important;border-bottom:1px solid #bbb!important;color:#0000cc!important;text-decoration:underline!important;cursor:pointer!important;font:11px Verdana,Tahoma,Arial,sans-serif!important}
+.legacy-sidebar a:hover,.legacy-sidebar button:hover{background:#dce9f4!important}
+.legacy-status{margin:14px 9px!important;padding:8px!important;border:1px solid #999!important;background:#f8f8f8!important;box-shadow:inset 1px 1px 2px rgba(0,0,0,.12)!important;color:#555!important;line-height:1.45!important}
+.legacy-status span{color:#168b2f!important}
+.legacy-viewport-shell{min-width:0!important;background:#333!important;border-left:1px solid #777!important;position:relative!important;padding:4px!important}
+.legacy-titlebar{height:23px!important;display:flex!important;justify-content:space-between!important;align-items:center!important;padding:0 7px!important;box-sizing:border-box!important;font-size:10px!important}
+#legacyWebGL{display:block!important;width:100%!important;height:365px!important;background:#82b8e0!important;cursor:grab!important;border:1px solid #111!important;image-rendering:auto!important}
+#legacyWebGL:active{cursor:grabbing!important}
+.legacy-client-hud{display:flex!important;justify-content:space-between!important;gap:10px!important;padding:5px 7px!important;background:#eee!important;border:1px solid #777!important;border-top:0!important;color:#444!important;font:9px "Courier New",monospace!important}
+@media(max-width:650px){.legacy-client{grid-template-columns:1fr!important}.legacy-sidebar{border-right:0!important;border-bottom:1px solid #555!important;display:grid!important;grid-template-columns:repeat(3,1fr)!important}.legacy-window-title,.legacy-sidebar-title,.legacy-status{grid-column:1/-1!important}.legacy-sidebar a,.legacy-sidebar button{border-right:1px solid #aaa!important}.legacy-sidebar-title{padding:6px!important}.legacy-status{margin:6px!important}#legacyWebGL{height:280px!important}}
